@@ -1,0 +1,176 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  --gold-light: #f7e8bf;
+  --gold-main: #c89b3c;
+  --gold-dark: #8b6526;
+  --cream: #fff8e8;
+  --brown: #4a3417;
+  --border: #d6b15f;
+  --shadow: 0 12px 30px rgba(111, 78, 18, 0.15);
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, #f7e8bf, #e7c97b, #f3ddb0, #fff7e7);
+  color: var(--brown);
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+  position: relative;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 500px;
+}
+
+.page-title {
+  text-align: center;
+  font-family: "Cinzel", serif;
+  color: var(--gold-dark);
+  margin-bottom: 24px;
+}
+
+.card {
+  background: rgba(255, 248, 232, 0.95);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-family: "Cinzel", serif;
+  color: var(--gold-dark);
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(139, 101, 38, 0.15);
+}
+
+.label {
+  font-weight: 600;
+  color: #6a522b;
+}
+
+.value {
+  font-weight: 600;
+  text-align: right;
+}
+
+.amount-box {
+  background: linear-gradient(180deg, #f8edd6, #f4dfb1);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.amount-label {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #6a522b;
+}
+
+.amount-value {
+  margin: 8px 0 0;
+  font-size: 2rem;
+  color: var(--gold-dark);
+  font-family: "Cinzel", serif;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-weight: 700;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-gold {
+  background: linear-gradient(180deg, #f2da8f, #d8ae4e);
+  color: var(--brown);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--gold-dark);
+  color: var(--gold-dark);
+}
+
+.btn-dark {
+  background: linear-gradient(180deg, #8b6526, #6f4e1f);
+  color: white;
+}
+
+.status-success {
+  color: #2f7a4d;
+  font-weight: 700;
+}
+
+.status-pending {
+  color: #9a6c17;
+  font-weight: 700;
+}
+
+.app-header-logout {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 248, 232, 0.9);
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(111, 78, 18, 0.1);
+  font-size: 14px;
+  color: var(--brown);
+}
+
+.logout-btn {
+  background: linear-gradient(180deg, #8b6526, #6f4e1f);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 13px;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(180deg, #6f4e1f, #553a15);
+  transform: scale(1.05);
+}
+

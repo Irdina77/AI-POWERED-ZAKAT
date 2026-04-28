@@ -1,0 +1,498 @@
+.zakat-container {
+  font-family: "Inter", sans-serif;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px 24px;
+  background: linear-gradient(180deg, #fdf6e3 0%, #f5e2b8 100%);
+  color: #3b2a0a;
+}
+
+/* buang limit tengah */
+.zakat-app-shell {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+/* HEADER lama biar tak ganggu */
+.zakat-hero {
+  text-align: center;
+  padding: 32px;
+  background: white;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.zakat-heading {
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.zakat-subtitle {
+  margin-top: 10px;
+  opacity: 0.7;
+}
+
+/* FULL WIDTH GRID */
+.zakat-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.zakat-card {
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.zakat-result-card {
+  border-top: 4px solid #d4a017;
+}
+
+.zakat-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+.zakat-card-subtitle {
+  color: #6f6250;
+  margin: 0;
+}
+
+.zakat-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.zakat-input,
+.zakat-select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+.zakat-input:focus,
+.zakat-select:focus {
+  border-color: #d4a017;
+  outline: none;
+}
+
+.zakat-button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.zakat-button:hover {
+  transform: translateY(-2px);
+}
+
+.zakat-button-primary {
+  background: linear-gradient(135deg, #2d6cdf, #4c8bf5);
+}
+
+.zakat-button-secondary {
+  background: #e5e5e5;
+  color: #444;
+}
+
+.zakat-button-gold {
+  background: linear-gradient(135deg, #b67b00, #d7a432);
+}
+
+.zakat-result-row {
+  display: grid;
+  gap: 10px;
+}
+
+.zakat-result-label {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.zakat-metric-card {
+  margin-top: 20px;
+  padding: 20px;
+  background: #fff4d6;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.zakat-metric-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.zakat-metric-value {
+  font-size: 36px;
+  font-weight: 900;
+  color: #7a5200;
+}
+
+.zakat-status {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 20px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.zakat-progress {
+  background: #eee;
+  height: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.zakat-progress-bar {
+  background: #2e7d32;
+  height: 100%;
+}
+
+.zakat-advice {
+  background: #fff8d6;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.zakat-topbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f5ee;
+  border: 1px solid #eadfca;
+  border-radius: 18px;
+  padding: 22px 28px;
+  margin-bottom: 22px;
+}
+
+.zakat-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.zakat-brand-logo {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c58a00, #f0c35c);
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  color: white;
+}
+
+.zakat-brand-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.zakat-brand-subtitle {
+  margin: 4px 0 0;
+  color: #6f6250;
+  font-size: 14px;
+}
+
+.zakat-user-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border: 1px solid #e7dcc6;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 600;
+}
+
+.zakat-user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #efe7d6;
+  display: grid;
+  place-items: center;
+}
+
+.zakat-stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 4px 28px;
+  width: 100%;
+}
+
+.zakat-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8a7f70;
+  font-weight: 600;
+}
+
+.zakat-step.active {
+  color: #b57b00;
+}
+
+.zakat-step-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #e3e0db;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+}
+
+.zakat-step.active .zakat-step-circle {
+  background: #c58a00;
+  color: white;
+}
+
+.zakat-step-line {
+  flex: 1;
+  height: 2px;
+  background: #ddd4c5;
+  min-width: 40px;
+}
+
+.zakat-section-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.zakat-section-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #f5ead0;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+}
+
+.zakat-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.zakat-field-block {
+  margin-bottom: 18px;
+}
+
+.zakat-note-box {
+  margin-top: 18px;
+  background: #eef5ff;
+  border: 1px solid #d6e6ff;
+  color: #3367a8;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 14px;
+}
+
+.zakat-summary-top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.zakat-summary-mini {
+  background: #f8f8f8;
+  border: 1px solid #ece7dd;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.zakat-summary-mini-label {
+  display: block;
+  color: #7a6d5e;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.zakat-total-status-box {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.zakat-total-box {
+  background: linear-gradient(180deg, #fff6e5, #f8edd5);
+  border: 1px solid #efdcb0;
+  border-radius: 18px;
+  padding: 18px 22px;
+}
+
+.zakat-total-label {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #7a5a13;
+}
+
+.zakat-total-amount {
+  font-size: 44px;
+  font-weight: 900;
+  color: #9a6700;
+  line-height: 1.1;
+}
+
+.zakat-status-badge {
+  border-radius: 18px;
+  padding: 18px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  text-align: center;
+  min-height: 100%;
+}
+
+.zakat-status-badge.success {
+  background: #e7f6e8;
+  color: #1f7a32;
+  border: 1px solid #cbe9cf;
+}
+
+.zakat-status-badge.danger {
+  background: #fff1ef;
+  color: #b23b2a;
+  border: 1px solid #f0d1cc;
+}
+
+.zakat-progress-card {
+  background: #fff;
+  border: 1px solid #ece7dd;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.zakat-progress-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.zakat-progress-text {
+  margin-top: 10px;
+  color: #6d6358;
+  font-size: 14px;
+}
+
+.zakat-advice-card {
+  background: #fff7dd;
+  border: 1px solid #f0df9f;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.zakat-advice-title {
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: #8d6700;
+}
+
+.zakat-action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.zakat-info-strip {
+  width: 100%;
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 16px;
+  background: #f3f7fb;
+  border: 1px solid #dbe6f3;
+  border-radius: 18px;
+  padding: 20px;
+}
+
+.zakat-info-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.zakat-info-icon {
+  font-size: 28px;
+}
+
+.zakat-info-card h4 {
+  margin: 0 0 6px;
+}
+
+.zakat-info-card p {
+  margin: 0;
+  color: #5f6872;
+  font-size: 14px;
+}
+
+.zakat-info-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.zakat-info-stat span {
+  color: #68707b;
+  font-size: 13px;
+}
+
+.zakat-info-stat strong {
+  font-size: 18px;
+}
+
+@media (max-width: 1024px) {
+  .zakat-summary-top,
+  .zakat-total-status-box,
+  .zakat-info-strip,
+  .zakat-action-row,
+  .zakat-two-col,
+  .zakat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .zakat-stepper {
+    flex-wrap: wrap;
+  }
+
+  .zakat-topbar {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+}

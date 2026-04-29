@@ -28,7 +28,14 @@ function Register() {
     setTimeout(() => {
       setIsLoading(false);
       setMessage("✅ Registration successful!");
-      navigate("/");
+      // Clear form fields
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      // Redirect to login page (the user must log in with their new credentials)
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
     }, 800);
   };
 

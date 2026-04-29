@@ -12,16 +12,30 @@ function Login({ onLoginSuccess, onGoToRegister }) {
       setMessage("⚠️ Please fill in all fields");
       return;
     }
+
+    if (password !== "123456") {
+      setMessage("❌ Invalid credentials");
+      return;
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const isAdmin = normalizedEmail === "admin@gmail.com";
+    const isValidUser = normalizedEmail.includes("@") && normalizedEmail.includes(".");
+
+    if (!isAdmin && !isValidUser) {
+      setMessage("❌ Invalid email address");
+      return;
+    }
+
     setIsLoading(true);
     setMessage("");
 
     setTimeout(() => {
-      const isAdmin = email.trim().toLowerCase() === "admin@gmail.com" && password === "123456";
       const role = isAdmin ? "admin" : "user";
       setMessage("✅ Login successful!");
       setTimeout(() => {
         localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userEmail", email);
+        localStorage.setItem("userEmail", normalizedEmail);
         localStorage.setItem("userRole", role);
         onLoginSuccess(role);
       }, 800);

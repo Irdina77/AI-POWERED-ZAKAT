@@ -6,14 +6,42 @@ function Login({ onLoginSuccess, onGoToRegister }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (email === "admin@gmail.com" && password === "123456") {
-      onLoginSuccess("admin");
-    } else {
-      setMessage("❌ Invalid credentials");
+
+    if (!email.trim() || !password) {
+      setMessage("⚠️ Please fill in all fields");
+      return;
     }
+
+    if (password !== "123456") {
+      setMessage("❌ Invalid credentials");
+      return;
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const isAdmin = normalizedEmail === "admin@gmail.com";
+    const isValidUser = normalizedEmail.includes("@") && normalizedEmail.includes(".");
+
+    if (!isAdmin && !isValidUser) {
+      setMessage("❌ Invalid email address");
+      return;
+    }
+
+    setIsLoading(true);
+    setMessage("");
+
+    setTimeout(() => {
+      setIsLoading(false);
+      const role = isAdmin ? "admin" : "user";
+      setMessage("✅ Login successful!");
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userEmail", normalizedEmail);
+      localStorage.setItem("userRole", role);
+      onLoginSuccess(role);
+    }, 700);
   };
 
   return (
@@ -37,6 +65,7 @@ function Login({ onLoginSuccess, onGoToRegister }) {
               placeholder=" " 
               value={email} 
               onChange={(e) => setEmail(e.target.value)} 
+              disabled={isLoading}
               required 
             />
             <label htmlFor="email">Email Address</label>
@@ -49,12 +78,15 @@ function Login({ onLoginSuccess, onGoToRegister }) {
               placeholder=" " 
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
+              disabled={isLoading}
               required 
             />
             <label htmlFor="password">Password</label>
           </div>
 
-          <button type="submit" className="btn-glass-gold">Sign In</button>
+          <button type="submit" className="btn-glass-gold" disabled={isLoading}>
+            {isLoading ? "Signing In..." : "Sign In"}
+          </button>
         </form>
 
         <div className="auth-link">

@@ -69,15 +69,18 @@ export default function App() {
     setUserRole(role);
     setAuthPage("login");
     setPage(role === "admin" ? "dashboard" : "calculator");
+    localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("userRole", role);
   };
 
   const handleRegisterSuccess = () => {
-    setIsLoggedIn(true);
+    // Do NOT automatically log in the user after registration
+    // User must log in manually with their new credentials
+    setIsLoggedIn(false);
     setUserRole("user");
-    setAuthPage("login");
+    setAuthPage("login"); // Redirect to login page
     setPage("calculator");
-    localStorage.setItem("userRole", "user");
+    // Do NOT store anything in localStorage - user needs to log in first
   };
 
   const handleGoToRegister = () => {

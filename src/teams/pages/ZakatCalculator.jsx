@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "../Styles/ZakatCalculator.css";
+import zakatIcon from "../../teams/assets/zakat-icon.webp";
+import Chatbot from "../components/Chatbot";
 
 function ZakatCalculator({ onComplete }) {
   const [selectedYear, setSelectedYear] = useState("2026");
@@ -143,25 +145,41 @@ function ZakatCalculator({ onComplete }) {
       maximumFractionDigits: 2,
     });
 
-  return (
-    <div className="zakat-container">
-      <div className="zakat-app-shell">
-        <header className="zakat-topbar">
-          <div className="zakat-brand">
-            <div className="zakat-brand-logo">🕌</div>
-            <div>
-              <h1 className="zakat-brand-title">ZAKAT NOW SYSTEM</h1>
-              <p className="zakat-brand-subtitle">
-                Calculate your business zakat easily and accurately
-              </p>
-            </div>
-          </div>
+return (
+    <>
+      <div className="zakat-container">
+        <div className="zakat-app-shell">
 
-          <div className="zakat-user-chip">
-            <span className="zakat-user-avatar">👤</span>
-            <span>User</span>
-          </div>
-        </header>
+          {/* 🔥 HEADER */}
+          <header className="zakat-topbar">
+            <div className="zakat-brand">
+
+              <img
+                src={zakatIcon}
+                alt="logo"
+                className="zakat-brand-logo-img"
+              />
+
+              <div className="zakat-brand-text">
+                <h1 className="zakat-brand-title">ZakatNow</h1>
+
+                <div className="zakat-divider">
+                  <span></span>
+                  <span className="diamond">◆</span>
+                  <span></span>
+                </div>
+
+                <p className="zakat-brand-subtitle">
+                  Calculate your business zakat easily and accurately
+                </p>
+              </div>
+
+            </div>
+
+            <div className="zakat-user-chip">
+              👤 User
+            </div>
+          </header>
 
         <div className="zakat-stepper">
           <div className={`zakat-step ${!hasCalculated ? "active" : "done"}`}>
@@ -466,7 +484,12 @@ function ZakatCalculator({ onComplete }) {
         </div>
       </div>
     </div>
-  );
+
+    <Chatbot />
+  </>
+);
 }
 
+
 export default ZakatCalculator;
+

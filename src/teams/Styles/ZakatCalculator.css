@@ -496,3 +496,74 @@
     align-items: flex-start;
   }
 }
+
+/* ===== PREMIUM HEADER ===== */
+.zakat-brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ICON */
+.zakat-brand-logo-img {
+  width: 65px;
+  height: 65px;
+  border-radius: 16px;
+  object-fit: cover;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* TEXT */
+.zakat-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+/* TITLE */
+.zakat-brand-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+
+  color: #f7e8bf;
+
+  -webkit-text-stroke: 0.5px #8b6526;
+
+  text-shadow:
+    0 2px 2px rgba(0,0,0,0.25),
+    0 6px 10px rgba(0,0,0,0.25);
+}
+
+/* DIVIDER */
+.zakat-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0;
+}
+
+.zakat-divider span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #d4af37, transparent);
+}
+
+.zakat-divider .diamond {
+  color: #d4af37;
+  font-size: 12px;
+}
+
+/* SUBTITLE */
+.zakat-brand-subtitle {
+  margin-top: 4px;
+  color: #6f6250;
+  font-size: 14px;
+}
+
+.chatbot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}

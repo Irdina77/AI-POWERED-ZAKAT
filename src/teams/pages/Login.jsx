@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../Styles/Login.css";
+import zakatIcon from "../assets/zakat-icon.webp";
 
 function Login({ onLoginSuccess, onGoToRegister }) {
   const [email, setEmail] = useState("");
@@ -18,7 +19,12 @@ function Login({ onLoginSuccess, onGoToRegister }) {
   return (
     <div className="glass-page-container">
       <div className="glass-card">
-        <h1 className="title">ZakatNow</h1>
+
+        <h1 className="title-with-icon">
+          <img src={zakatIcon} alt="zakat icon" className="icon-small" />
+          <span>ZakatNow</span>
+        </h1>
+
         <p className="subtitle">Welcome back! Please sign in</p>
 
         {message && <div className="message error">{message}</div>}

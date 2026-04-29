@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../Styles/Register.css";
+import zakatIcon from "../assets/zakat-icon.webp";
 
 function Register({ onRegisterSuccess, onBackToLogin }) {
   const [username, setUsername] = useState("");
@@ -9,7 +10,12 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
   return (
     <div className="glass-page-container">
       <div className="glass-card">
-        <h1 className="title">ZakatNow</h1>
+
+        <h1 className="title-with-icon">
+          <img src={zakatIcon} alt="zakat icon" className="icon-small" />
+          <span>ZakatNow</span>
+        </h1>
+
         <p className="subtitle">Join our community. Create your account</p>
 
         <form onSubmit={(e) => e.preventDefault()}>
@@ -28,7 +34,13 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
             <label htmlFor="pass">Password</label>
           </div>
 
-          <button type="submit" className="btn-glass-gold" onClick={onRegisterSuccess}>Create Account</button>
+          <button 
+            type="submit" 
+            className="btn-glass-gold" 
+            onClick={onRegisterSuccess}
+          >
+            Create Account
+          </button>
         </form>
 
         <div className="auth-link">

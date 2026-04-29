@@ -444,3 +444,14 @@ g.dashboard-topbar,
   color: #991b1b;
   border: 1px solid #fca5a5;
 }
+
+.ai-insight {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fff8e6, #fdf2d0);
+  font-size: 13px;
+  color: #6b4f00;
+  line-height: 1.5;
+  border: 1px solid #f0d9a6;
+}

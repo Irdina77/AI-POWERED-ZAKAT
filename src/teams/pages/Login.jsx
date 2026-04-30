@@ -11,23 +11,40 @@ function Login({ onLoginSuccess, onGoToRegister }) {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (!email.trim() || !password) {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (!normalizedEmail || !password) {
       setMessage("⚠️ Please fill in all fields");
       return;
     }
 
-    if (password !== "123456") {
-      setMessage("❌ Invalid credentials");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(normalizedEmail)) {
+      setMessage("❌ Please enter a valid email address");
       return;
     }
 
-    const normalizedEmail = email.trim().toLowerCase();
+    const storedUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
     const isAdmin = normalizedEmail === "admin@gmail.com";
-    const isValidUser = normalizedEmail.includes("@") && normalizedEmail.includes(".");
+    const adminPassword = "123456";
 
-    if (!isAdmin && !isValidUser) {
-      setMessage("❌ Invalid email address");
-      return;
+    if (isAdmin) {
+      if (password !== adminPassword) {
+        setMessage("❌ Invalid credentials");
+        return;
+      }
+    } else {
+      const matchedUser = storedUsers.find((user) => user.email === normalizedEmail);
+
+      if (!matchedUser) {
+        setMessage("❌ Account not found. Please register first.");
+        return;
+      }
+
+      if (matchedUser.password !== password) {
+        setMessage("❌ Invalid credentials");
+        return;
+      }
     }
 
     setIsLoading(true);

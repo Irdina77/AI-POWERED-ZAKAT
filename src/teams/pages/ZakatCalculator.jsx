@@ -101,8 +101,102 @@ function ZakatCalculator({ onComplete }) {
       date: new Date().toLocaleString(),
     });
 
+    history.push({
+      year: selectedYear,
+      state: selectedState,
+      businessMethod,
+      businessRevenue,
+      businessExpenses,
+      currentAssets,
+      currentLiabilities,
+      total,
+      zakat,
+      nisab,
+      date: new Date().toLocaleString(),
+      timestamp: Date.now(),
+    });
+
     localStorage.setItem("zakatHistory", JSON.stringify(history));
     alert("Data saved successfully.");
+  };
+
+  const getStoredHistory = () => {
+    return JSON.parse(localStorage.getItem("zakatHistory") || "[]");
+  };
+
+  const getFinancialInsight = () => {
+    if (!hasCalculated) {
+      return "Calculate your zakat to receive smart financial insights tailored to your business.";
+    }
+
+    const history = getStoredHistory();
+    const messages = [];
+    const currentTotal = Number(total);
+    const currentZakat = Number(zakat);
+
+    if (businessMethod === "UntungRugi") {
+      const revenue = Number(businessRevenue);
+      const expense = Number(businessExpenses);
+      const ratio = revenue > 0 ? expense / revenue : 0;
+
+      if (revenue === 0) {
+        messages.push("Revenue data is missing, so expense analysis is not available.");
+      } else if (ratio >= 0.75) {
+        messages.push("Your expenses are relatively high compared to your income. Consider reviewing costs to boost profit.");
+      } else if (ratio >= 0.5) {
+        messages.push("Your expenses are moderate but still significant. Improving margins can help your zakat position.");
+      } else {
+        messages.push("Your revenue is strong relative to expenses. This is a healthy profit trend.");
+      }
+    } else {
+      const assets = Number(currentAssets);
+      const liabilities = Number(currentLiabilities);
+      const ratio = assets > 0 ? liabilities / assets : 0;
+
+      if (assets === 0) {
+        messages.push("Working capital data is incomplete, so current ratio insights are limited.");
+      } else if (ratio >= 1) {
+        messages.push("Your current liabilities exceed assets. Strengthen your working capital before the next cycle.");
+      } else if (ratio >= 0.7) {
+        messages.push("Your working capital is tight. Aim to increase liquid assets to stay secure.");
+      } else {
+        messages.push("Your working capital position looks healthy for the selected period.");
+      }
+    }
+
+    if (currentTotal > 0 && currentZakat === 0) {
+      messages.push("You have not reached nisab yet, so no zakat is payable at this moment.");
+    }
+
+    if (history.length > 0) {
+      const latest = [...history].sort((a, b) => b.timestamp - a.timestamp)[0];
+      const previousZakat = Number(latest.zakat || 0);
+      const previousTotal = Number(latest.total || 0);
+
+      if (previousZakat > 0) {
+        const change = ((currentZakat - previousZakat) / previousZakat) * 100;
+        const rounded = Math.abs(change).toFixed(0);
+
+        if (change > 5) {
+          messages.push(`Your zakat amount increased by ${rounded}% compared to your last saved calculation.`);
+        } else if (change < -5) {
+          messages.push(`Your zakat amount decreased by ${rounded}% compared to your last saved calculation.`);
+        } else {
+          messages.push("Your zakat amount is stable compared to your last saved calculation.");
+        }
+      } else if (previousTotal > 0 && currentTotal > 0) {
+        const change = ((currentTotal - previousTotal) / previousTotal) * 100;
+        const rounded = Math.abs(change).toFixed(0);
+
+        if (change > 5) {
+          messages.push(`Your profit / working capital increased by ${rounded}% compared to your last saved calculation.`);
+        } else if (change < -5) {
+          messages.push(`Your profit / working capital decreased by ${rounded}% compared to your last saved calculation.`);
+        }
+      }
+    }
+
+    return messages.join(" ");
   };
 
   const handleProceedToResult = () => {
@@ -425,6 +519,11 @@ return (
                 RM {hasCalculated ? formatCurrency(total) : "0.00"} / RM{" "}
                 {formatCurrency(nisab)}
               </div>
+            </div>
+
+            <div className="zakat-advice-card">
+              <div className="zakat-advice-title">AI Financial Insight</div>
+              <p>{getFinancialInsight()}</p>
             </div>
 
             <div className="zakat-action-row">

@@ -23,7 +23,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(email.trim())) {
       setMessage("❌ Please enter a valid email address");
       return false;
     }
@@ -41,6 +41,11 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
     return true;
   };
 
+  const getStoredUsers = () => {
+    const stored = localStorage.getItem("registeredUsers");
+    return stored ? JSON.parse(stored) : [];
+  };
+
   const handleCreateAccount = (e) => {
     e.preventDefault();
     setMessage("");
@@ -49,19 +54,34 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
       return;
     }
 
+    const normalizedEmail = email.trim().toLowerCase();
+    const users = getStoredUsers();
+
+    if (users.some((user) => user.email === normalizedEmail)) {
+      setMessage("⚠️ An account with this email already exists");
+      return;
+    }
+
     setIsLoading(true);
 
-    // Simulate account creation (e.g., API call would go here)
     setTimeout(() => {
+      const newUser = {
+        username: username.trim(),
+        email: normalizedEmail,
+        password,
+      };
+
+      const updatedUsers = [...users, newUser];
+      localStorage.setItem("registeredUsers", JSON.stringify(updatedUsers));
+
       setIsLoading(false);
       setMessage("✅ Account created successfully! Redirecting to login...");
-      
+
       // Clear form fields
       setUsername("");
       setEmail("");
       setPassword("");
-      
-      // Redirect to login after a brief delay
+
       setTimeout(() => {
         onRegisterSuccess();
       }, 1500);

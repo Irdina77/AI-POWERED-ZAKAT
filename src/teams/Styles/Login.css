@@ -216,3 +216,42 @@ body {
   background: rgba(239, 68, 68, 0.2);
   color: #ff8787;
 }
+
+/* ===== FIX REGISTER LINK ===== */
+
+.auth-link {
+  text-align: center;
+  margin-top: 25px;
+  color: white;
+  font-size: 14px;
+  position: relative;
+  z-index: 999;
+}
+
+.register-link-btn {
+  background: none;
+  border: none;
+  color: #f7e8bf;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+.register-link-btn:hover {
+  color: #ffffff;
+  transform: scale(1.03);
+}
+
+/* Prevent message blocking clicks */
+.message {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.glass-card {
+  position: relative;
+  z-index: 10;
+}

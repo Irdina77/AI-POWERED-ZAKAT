@@ -1,6 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 export default function ResultCard({ result }) {
+  const [displayAmount, setDisplayAmount] = useState(0);
+
+  // Animated counter for zakat amount
+  useEffect(() => {
+    if (!result) return;
+
+    const targetAmount = Number(result.zakatAmount);
+    const duration = 1200; // milliseconds
+    const steps = 60;
+    const increment = targetAmount / steps;
+    let currentStep = 0;
+
+    const interval = setInterval(() => {
+      if (currentStep < steps) {
+        setDisplayAmount(increment * currentStep);
+        currentStep++;
+      } else {
+        setDisplayAmount(targetAmount);
+        clearInterval(interval);
+      }
+    }, duration / steps);
+
+    return () => clearInterval(interval);
+  }, [result]);
+
   // 🔥 AI LOGIC
   const getAIInsight = () => {
     if (!result) return "Enter your data to get AI insights.";
@@ -32,46 +58,125 @@ export default function ResultCard({ result }) {
     return "Your business has not reached nisab yet. Continue monitoring your balance and recalculate when your assets grow.";
   };
 
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+    hover: {
+      y: -8,
+      transition: { duration: 0.3, ease: "easeOut" },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
   return (
-    <div className="card result-summary-card">
-      <div className="summary-header">
+    <motion.div
+      className="card result-summary-card result-card-premium"
+      variants={cardVariants}
+      initial="hidden"
+      animate="visible"
+      whileHover="hover"
+    >
+      <motion.div
+        className="summary-header"
+        variants={itemVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div>
-          <h2 className="card-title">Calculation Summary</h2>
+          <h2 className="card-title result-card-title">Calculation Summary</h2>
           <p className="summary-subtitle">A clear breakdown of your zakat result and next steps.</p>
         </div>
-        <span className={`status-chip ${result.nisabStatus === "Eligible" ? "status-success" : "status-pending"}`}>
+        <motion.span
+          className={`status-chip ${
+            result.nisabStatus === "Eligible" ? "status-success" : "status-pending"
+          }`}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+        >
           {result.nisabStatus}
-        </span>
-      </div>
+        </motion.span>
+      </motion.div>
 
-      <div className="summary-grid">
-        <div className="summary-item">
+      <motion.div
+        className="summary-grid result-grid-premium"
+        variants={{
+          visible: {
+            transition: {
+              staggerChildren: 0.1,
+              delayChildren: 0.2,
+            },
+          },
+        }}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div className="summary-item result-item-premium" variants={itemVariants}>
+          <div className="item-icon">💰</div>
           <span className="item-label">Zakat Amount</span>
-          <span className="item-value">RM {Number(result.zakatAmount).toFixed(2)}</span>
-        </div>
+          <motion.span
+            className="item-value amount-animated"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            RM {displayAmount.toFixed(2)}
+          </motion.span>
+        </motion.div>
 
-        <div className="summary-item">
+        <motion.div className="summary-item result-item-premium" variants={itemVariants}>
+          <div className="item-icon">📊</div>
           <span className="item-label">Calculation Method</span>
           <span className="item-value">{result.method}</span>
-        </div>
+        </motion.div>
 
-        <div className="summary-item">
+        <motion.div className="summary-item result-item-premium" variants={itemVariants}>
+          <div className="item-icon">✓</div>
           <span className="item-label">Payment Status</span>
-          <span className="item-value">{result.nisabStatus === "Eligible" ? "Payable" : "Not due"}</span>
-        </div>
+          <span className="item-value">
+            {result.nisabStatus === "Eligible" ? "Payable" : "Not due"}
+          </span>
+        </motion.div>
 
-        <div className="summary-item">
+        <motion.div className="summary-item result-item-premium" variants={itemVariants}>
+          <div className="item-icon">→</div>
           <span className="item-label">Recommended Action</span>
-          <span className="item-value">{result.nisabStatus === "Eligible" ? "Proceed to pay" : "Recalculate later"}</span>
-        </div>
-      </div>
+          <span className="item-value">
+            {result.nisabStatus === "Eligible" ? "Proceed to pay" : "Recalculate later"}
+          </span>
+        </motion.div>
+      </motion.div>
 
-      <div className="insight-box">
-        <p className="insight-title">🧠 Smart insight</p>
+      <motion.div
+        className="insight-box result-insight-premium"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        whileHover={{ y: -2 }}
+      >
+        <p className="insight-title">🧠 Smart Insight</p>
         <p>{getAIInsight()}</p>
-      </div>
+      </motion.div>
 
-      <div className="summary-note">{getResultNote()}</div>
-    </div>
+      <motion.div
+        className="summary-note result-note-premium"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.7 }}
+      >
+        {getResultNote()}
+      </motion.div>
+    </motion.div>
   );
 }

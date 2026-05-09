@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Styles/Register.css";
 import zakatIcon from "../assets/zakat-icon.webp";
 
 function Register({ onRegisterSuccess, onBackToLogin }) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -84,6 +86,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
 
       setTimeout(() => {
         onRegisterSuccess();
+        navigate('/login');
       }, 1500);
     }, 800);
   };
@@ -155,7 +158,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
         </form>
 
         <div className="auth-link">
-          Already have an account? <span onClick={onBackToLogin}>Sign in here</span>
+          Already have an account? <span onClick={() => navigate('/login')}>Sign in here</span>
         </div>
       </div>
     </div>

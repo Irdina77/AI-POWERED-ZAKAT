@@ -1,63 +1,120 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Styles/Login.css";
 import zakatIcon from "../assets/zakat-icon.webp";
 
-function Login({ onLoginSuccess, onGoToRegister }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+function Login({ onLoginSuccess }) {
+  const navigate = useNavigate();
+
+  const [email, setEmail] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
+
+  const [message, setMessage] =
+    useState("");
+
+  const [isLoading, setIsLoading] =
+    useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    const normalizedEmail = email.trim().toLowerCase();
-
-    if (!normalizedEmail || !password) {
-      setMessage("⚠️ Please fill in all fields");
+    if (!email || !password) {
+      setMessage(
+        "⚠️ Please fill in all fields"
+      );
       return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(normalizedEmail)) {
-      setMessage("❌ Please enter a valid email address");
-      return;
-    }
-
-    const storedUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-    const isAdmin = normalizedEmail === "admin@gmail.com";
-    const adminPassword = "123456";
-
-    if (isAdmin) {
-      if (password !== adminPassword) {
-        setMessage("❌ Invalid credentials");
-        return;
-      }
-    } else {
-      const matchedUser = storedUsers.find((user) => user.email === normalizedEmail);
-
-      if (!matchedUser) {
-        setMessage("❌ Account not found. Please register first.");
-        return;
-      }
-
-      if (matchedUser.password !== password) {
-        setMessage("❌ Invalid credentials");
-        return;
-      }
     }
 
     setIsLoading(true);
     setMessage("");
 
     setTimeout(() => {
-      setIsLoading(false);
-      const role = isAdmin ? "admin" : "user";
-      setMessage("✅ Login successful!");
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userEmail", normalizedEmail);
-      localStorage.setItem("userRole", role);
-      onLoginSuccess(role);
+      const normalizedEmail =
+        email.trim().toLowerCase();
+
+      // ===================
+      // ADMIN LOGIN
+      // ===================
+      if (
+        normalizedEmail ===
+          "admin@gmail.com" &&
+        password === "123456"
+      ) {
+        localStorage.setItem(
+          "isLoggedIn",
+          "true"
+        );
+
+        localStorage.setItem(
+          "userEmail",
+          normalizedEmail
+        );
+
+        localStorage.setItem(
+          "userRole",
+          "admin"
+        );
+
+        setIsLoading(false);
+        setMessage(
+          "✅ Login successful!"
+        );
+
+        onLoginSuccess("admin");
+        return;
+      }
+
+      // ===================
+      // REGISTERED USERS
+      // ===================
+      const storedUsers =
+        JSON.parse(
+          localStorage.getItem(
+            "registeredUsers"
+          ) || "[]"
+        );
+
+      const matchedUser =
+        storedUsers.find(
+          (user) =>
+            user.email ===
+              normalizedEmail &&
+            user.password ===
+              password
+        );
+
+      if (matchedUser) {
+        localStorage.setItem(
+          "isLoggedIn",
+          "true"
+        );
+
+        localStorage.setItem(
+          "userEmail",
+          normalizedEmail
+        );
+
+        localStorage.setItem(
+          "userRole",
+          "user"
+        );
+
+        setIsLoading(false);
+        setMessage(
+          "✅ Login successful!"
+        );
+
+        onLoginSuccess("user");
+      } else {
+        setIsLoading(false);
+
+        setMessage(
+          "❌ Invalid email or password"
+        );
+      }
     }, 700);
   };
 
@@ -66,48 +123,93 @@ function Login({ onLoginSuccess, onGoToRegister }) {
       <div className="glass-card">
 
         <h1 className="title-with-icon">
-          <img src={zakatIcon} alt="zakat icon" className="icon-small" />
+          <img
+            src={zakatIcon}
+            alt="zakat icon"
+            className="icon-small"
+          />
           <span>ZakatNow</span>
         </h1>
 
-        <p className="subtitle">Welcome back! Please sign in</p>
+        <p className="subtitle">
+          Welcome back! Please sign in
+        </p>
 
-        {message && <div className="message error">{message}</div>}
+        {message && (
+          <p
+            className={`message ${
+              message.includes("✅")
+                ? "success"
+                : "error"
+            }`}
+          >
+            {message}
+          </p>
+        )}
 
-        <form onSubmit={handleLogin}>
+        <form
+          onSubmit={handleLogin}
+        >
           <div className="floating-group">
-            <input 
-              id="email" 
-              type="email" 
-              placeholder=" " 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
+            <input
+              id="email"
+              type="email"
+              placeholder=" "
+              value={email}
+              onChange={(e) =>
+                setEmail(
+                  e.target.value
+                )
+              }
               disabled={isLoading}
-              required 
+              required
             />
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="email">
+              Email Address
+            </label>
           </div>
 
           <div className="floating-group">
-            <input 
-              id="password" 
-              type="password" 
-              placeholder=" " 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
+            <input
+              id="password"
+              type="password"
+              placeholder=" "
+              value={password}
+              onChange={(e) =>
+                setPassword(
+                  e.target.value
+                )
+              }
               disabled={isLoading}
-              required 
+              required
             />
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">
+              Password
+            </label>
           </div>
 
-          <button type="submit" className="btn-glass-gold" disabled={isLoading}>
-            {isLoading ? "Signing In..." : "Sign In"}
+          <button
+            type="submit"
+            className="btn-glass-gold"
+            disabled={isLoading}
+          >
+            {isLoading
+              ? "Signing In..."
+              : "Sign In"}
           </button>
         </form>
 
         <div className="auth-link">
-          Don't have an account? <span onClick={onGoToRegister}>Register here</span>
+          Don't have an account?{" "}
+          <span
+            onClick={() =>
+              navigate(
+                "/register"
+              )
+            }
+          >
+            Register here
+          </span>
         </div>
       </div>
     </div>

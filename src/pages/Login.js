@@ -30,15 +30,20 @@ function Login({ onLoginSuccess, onGoToRegister }) {
     setIsLoading(true);
     setMessage("");
 
-    setTimeout(() => {
-      const role = isAdmin ? "admin" : "user";
-      setMessage("✅ Login successful!");
-      setTimeout(() => {
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userEmail", normalizedEmail);
-        localStorage.setItem("userRole", role);
-        onLoginSuccess(role);
-      }, 800);
+setTimeout(() => {
+  setIsLoading(false);
+
+  const role = isAdmin ? "admin" : "user";
+
+  localStorage.setItem("isLoggedIn", "true");
+  localStorage.setItem("userEmail", normalizedEmail);
+  localStorage.setItem("userRole", role);
+
+  setMessage("✅ Login successful!");
+
+  onLoginSuccess(role);
+
+}, 700);
     }, 1000);
   };
 

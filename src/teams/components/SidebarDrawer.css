@@ -1,0 +1,169 @@
+/* Sidebar Drawer Styles */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+.sidebar-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 100vh;
+  background: linear-gradient(180deg, #fefefe 0%, #f8f5ee 100%);
+  border-right: 1px solid #e8dcc6;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Profile Section */
+.sidebar-profile {
+  padding: 32px 24px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid #e8dcc6;
+  background: linear-gradient(135deg, #fef9e6 0%, #f5ead0 100%);
+}
+
+.sidebar-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4a017, #f0c35c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 4px 16px rgba(212, 160, 23, 0.3);
+}
+
+.sidebar-user-info {
+  flex: 1;
+}
+
+.sidebar-welcome {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #8d6700;
+}
+
+.sidebar-email {
+  margin: 0;
+  font-size: 14px;
+  color: #6f6250;
+  opacity: 0.8;
+}
+
+/* Divider */
+.sidebar-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #e8dcc6 20%, #e8dcc6 80%, transparent 100%);
+  margin: 0 24px;
+}
+
+/* Navigation */
+.sidebar-nav {
+  padding: 16px 0;
+  flex: 1;
+}
+
+.sidebar-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  margin: 4px 8px;
+  border-radius: 12px;
+}
+
+.sidebar-menu-item:hover {
+  background: linear-gradient(135deg, #fef7e0 0%, #f9e5b8 100%);
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px rgba(212, 160, 23, 0.15);
+}
+
+.sidebar-menu-item:active {
+  transform: translateX(2px);
+}
+
+.sidebar-menu-icon {
+  font-size: 20px;
+  width: 24px;
+  text-align: center;
+}
+
+.sidebar-menu-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #3b2a0a;
+}
+
+/* Islamic Pattern */
+.sidebar-pattern {
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  opacity: 0.3;
+}
+
+.pattern-element {
+  font-size: 12px;
+  color: #d4a017;
+  animation: patternGlow 3s ease-in-out infinite alternate;
+}
+
+.pattern-element:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.pattern-element:nth-child(3) {
+  animation-delay: 2s;
+}
+
+@keyframes patternGlow {
+  from {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar-drawer {
+    width: 280px;
+  }
+
+  .sidebar-profile {
+    padding: 24px 20px 20px;
+  }
+
+  .sidebar-menu-item {
+    padding: 14px 20px;
+    margin: 2px 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-drawer {
+    width: 260px;
+  }
+}

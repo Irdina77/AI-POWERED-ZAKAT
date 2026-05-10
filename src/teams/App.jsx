@@ -5,10 +5,14 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
+import { LanguageProvider } from "./context/LanguageContext";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import HomePage from "./pages/HomePage";
 import ZakatCalculator from "./pages/ZakatCalculator";
+import Profile from "./pages/Profile";
+import NisabPage from "./pages/NisabPage";
 import ResultPage from "./pages/ResultPage";
 import PaymentPage from "./pages/PaymentPage";
 import TransferPage from "./pages/TransferPage";
@@ -114,13 +118,9 @@ export default function App() {
 
     // FIX LOGIN REDIRECT
     if (role === "admin") {
-      window.location.replace(
-        "/admin/dashboard"
-      );
+      navigate("/admin/dashboard");
     } else {
-      window.location.replace(
-        "/calculator"
-      );
+      navigate("/dashboard");
     }
   };
 
@@ -267,7 +267,8 @@ export default function App() {
     };
 
   return (
-    <Routes>
+    <LanguageProvider>
+      <Routes>
       {/* LOGIN */}
       <Route
         path="/login"
@@ -304,7 +305,7 @@ export default function App() {
               />
             ) : (
               <Navigate
-                to="/calculator"
+                to="/dashboard"
                 replace
               />
             )
@@ -319,6 +320,20 @@ export default function App() {
 
       {/* USER */}
       <Route
+        path="/dashboard"
+        element={
+          isLoggedIn ? (
+            <HomePage />
+          ) : (
+            <Navigate
+              to="/login"
+              replace
+            />
+          )
+        }
+      />
+
+      <Route
         path="/calculator"
         element={
           isLoggedIn ? (
@@ -327,6 +342,34 @@ export default function App() {
                 handleCalculatorComplete
               }
             />
+          ) : (
+            <Navigate
+              to="/login"
+              replace
+            />
+          )
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          isLoggedIn ? (
+            <Profile />
+          ) : (
+            <Navigate
+              to="/login"
+              replace
+            />
+          )
+        }
+      />
+
+      <Route
+        path="/nisab"
+        element={
+          isLoggedIn ? (
+            <NisabPage />
           ) : (
             <Navigate
               to="/login"
@@ -441,5 +484,6 @@ export default function App() {
         }
       />
     </Routes>
+    </LanguageProvider>
   );
 }

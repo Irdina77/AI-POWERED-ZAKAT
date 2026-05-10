@@ -87,7 +87,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
       setTimeout(() => {
         onRegisterSuccess();
         navigate('/login');
-      }, 1500);
+      }, 1000);
     }, 800);
   };
 

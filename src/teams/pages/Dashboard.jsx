@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import FullScreenPanel from "../components/FullScreenPanel";
+import { useNavigate } from "react-router-dom";
 import "../Styles/Dashboard.css";
+import zakatIcon from "../../teams/assets/zakat-icon.webp";
+import Chatbot from "../components/Chatbot";
+import SidebarDrawer from "../components/SidebarDrawer";
 
 function ActivityIcon({ type }) {
   if (type === "success") return <span className="dashboard-icon">✔️</span>;
@@ -23,9 +26,11 @@ export default function Dashboard({
   activities,
   onGoNisab,
 }) {
+  const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [openPanel, setOpenPanel] = useState(null);
   const [showSettingMenu, setShowSettingMenu] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const settingMenuRef = useRef(null);
 
   useEffect(() => {
@@ -68,330 +73,183 @@ export default function Dashboard({
   };
 
   return (
-    <div className="dashboard-page">
-      <nav className="dashboard-topbar">
-        <div className="dashboard-topbar-inner">
-          <div className="dashboard-brand">
-            <div className="brand-logo">✦</div>
-            <span className="brand-text">ZAKAT NOW SYSTEM</span>
-          </div>
-
-          <div className="dashboard-menu">
-            <button className="menu-link active">System Data</button>
-            <button className="menu-link" onClick={onGoNisab}>
-              Nisab Management
-            </button>
-          </div>
-
-          <div className="dashboard-right">
-            <span className="top-icon">🔔</span>
-
-            <div
-              className="setting-dropdown-wrapper"
-              ref={settingMenuRef}
-            >
-              <span
-                className="top-icon"
-                onClick={() => setShowSettingMenu((prev) => !prev)}
-                style={{ cursor: "pointer" }}
-              >
-                ⚙️
-              </span>
-
-              {showSettingMenu && (
-                <div className="setting-dropdown-menu">
-                  <button
-                    className="setting-dropdown-item"
-                    onClick={handleLogout}
-                  >
-                    🚪
-                    <span>Logout</span>
-                  </button>
-                </div>
-              )}
-            </div>
-
-            <div className="admin-box">
-              <div className="admin-avatar">👤</div>
-              <div>
-                <div className="admin-name">Admin</div>
-                <div className="admin-role">Super Admin</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <>
       <div className="dashboard-container">
-        <div className="dashboard-meta-row">
-          <span className="admin-badge">ADMIN DASHBOARD</span>
+        {/* 🔥 HEADER */}
+        <header className="zakat-topbar">
+          <div className="zakat-brand">
+            <img
+              src={zakatIcon}
+              alt="logo"
+              className="zakat-brand-logo-img"
+            />
 
-          <div className="meta-right">
-            <span>{formattedDate}</span>
-            <span>{formattedTime}</span>
+            <div className="zakat-brand-text">
+              <h1 className="zakat-brand-title">ZakatNow</h1>
+
+              <div className="zakat-divider">
+                <span></span>
+                <span className="diamond">◆</span>
+                <span></span>
+              </div>
+
+              <p className="zakat-brand-subtitle">
+                Calculate your business zakat easily and accurately
+              </p>
+            </div>
           </div>
-        </div>
 
-        <header className="dashboard-header dashboard-header-centered">
-          <h1> System Data</h1>
-          <p className="dashboard-subtitle">
-            In every provision we are given, 2.5% is the right of others.
-          </p>
+          <div className="zakat-topbar-actions">
+            <button
+              className="zakat-menu-button"
+              onClick={() => setIsDrawerOpen(true)}
+              aria-label="Open menu"
+            >
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+            </button>
+
+            <div className="zakat-user-chip">
+              👤 Irdina
+            </div>
+          </div>
         </header>
 
-        <div className="dashboard-stats-grid">
-          <div className="dashboard-stat-card">
-            <div className="dashboard-stat-icon green">👥</div>
-            <div>
-              <div className="dashboard-stat-title">Total Users</div>
-              <div className="dashboard-stat-value">{totalUsers}</div>
-              <div className="dashboard-stat-note">↑ 12 this month</div>
-            </div>
-          </div>
-
-          <div className="dashboard-stat-card">
-            <div className="dashboard-stat-icon gold">🧮</div>
-            <div>
-              <div className="dashboard-stat-title">Current Nisab</div>
-              <div className="dashboard-stat-value">
-                RM
-                {Number(currentNisab.value).toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </div>
-              <div className="dashboard-stat-note">
-                Updated {currentNisabUpdatedAt}
+        {/* Hero Section */}
+        <section className="dashboard-hero">
+          <div className="hero-card">
+            <div className="hero-left">
+              <p className="hero-greeting">ASSALAMUALAIKUM, WELCOME BACK</p>
+              <h2 className="hero-username">Irdina</h2>
+              <p className="hero-email">irdina@zakatnow.com</p>
+              <p className="hero-description">
+                Manage your business zakat easily using AI-powered zakat calculation and payment assistance.
+              </p>
+              <div className="hero-buttons">
+                <button className="hero-primary-btn" onClick={() => navigate('/calculator')}>
+                  Open Kalkulator Zakat
+                </button>
+                <button className="hero-secondary-btn" onClick={() => navigate('/nisab')}>
+                  View Nisab Tahunan
+                </button>
               </div>
             </div>
-          </div>
-
-          <div className="dashboard-stat-card">
-            <div className="dashboard-stat-icon purple">💵</div>
-            <div>
-              <div className="dashboard-stat-title">Zakat This Year</div>
-              <div className="dashboard-stat-value">
-                RM
-                {Number(zakatThisYear).toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </div>
-              <div className="dashboard-stat-note">
-                Based on successful payments
-              </div>
-            </div>
-          </div>
-
-          <div className="dashboard-stat-card">
-            <div className="dashboard-stat-icon gold">💳</div>
-            <div>
-              <div className="dashboard-stat-title">Successful Payments</div>
-              <div className="dashboard-stat-value">{successfulPayments}</div>
-              <div className="dashboard-stat-note">
-                {pendingPayments} pending payments
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="dashboard-main-grid">
-          <div className="dashboard-left-column">
-            <section className="dashboard-card dashboard-overview-card">
-              <div className="dashboard-card-header">
-                <h2>⚡ Quick Overview</h2>
-                <span className="dashboard-card-caret">⌄</span>
-              </div>
-
-              <div className="dashboard-overview-grid">
-                <div className="dashboard-overview-block">
-                  <div className="overview-line strong">
-                    Active Users: {users.filter((u) => u.status === "Active").length}
-                  </div>
-
-                  <div className="overview-line">
-                    Pending Payments: {pendingPayments}
-                  </div>
-                </div>
-
-                <div className="dashboard-overview-divider" />
-
-                <div className="dashboard-overview-block">
-                  <div className="overview-line strong">
-                    Latest Payment: RM{payments[0]?.amount ?? 0}
-                  </div>
-
-                  <div className="overview-line">
-                    Gold Price: RM{Number(currentNisab.goldPrice).toFixed(2)}/g
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <div className="dashboard-records-list">
-              <div
-                className="dashboard-record-row"
-                onClick={() => setOpenPanel("users")}
-              >
-                <div className="dashboard-record-left">
-                  <div className="dashboard-record-icon">👥</div>
-                  <div>
-                    <div className="dashboard-record-title">Registered Users</div>
-                    <div className="dashboard-record-desc">
-                      Manage and monitor user accounts
-                    </div>
-                  </div>
-                </div>
-
-                <div className="dashboard-record-right">
-                  <div className="dashboard-record-right-top">
-                    5 new registrations this week
-                  </div>
-                  <div className="dashboard-record-right-bottom">
-                    Total: {totalUsers} users
-                  </div>
-                </div>
-
-                <div className="dashboard-record-arrow">
-                  ➜
-                </div>
-              </div>
-
-              <div
-                className="dashboard-record-row"
-                onClick={() => setOpenPanel("calculations")}
-              >
-                <div className="dashboard-record-left">
-                  <div className="dashboard-record-icon">🧮</div>
-                  <div>
-                    <div className="dashboard-record-title">
-                      Calculation Records
-                    </div>
-                    <div className="dashboard-record-desc">
-                      View and manage zakat calculations
-                    </div>
-                  </div>
-                </div>
-
-                <div className="dashboard-record-right">
-                  <div className="dashboard-record-right-top">
-                    12 new calculations this week
-                  </div>
-                  <div className="dashboard-record-right-bottom">
-                    Total: {calculations.length} records
-                  </div>
-                </div>
-
-                <div className="dashboard-record-arrow">
-                  ➜
-                </div>
-              </div>
-
-              <div
-                className="dashboard-record-row"
-                onClick={() => setOpenPanel("payments")}
-              >
-                <div className="dashboard-record-left">
-                  <div className="dashboard-record-icon">💳</div>
-                  <div>
-                    <div className="dashboard-record-title">Payment Records</div>
-                    <div className="dashboard-record-desc">
-                      Track and manage payment transactions
-                    </div>
-                  </div>
-                </div>
-
-                <div className="dashboard-record-right">
-                  <div className="dashboard-record-right-top">
-                    10 new payments this week
-                  </div>
-                  <div className="dashboard-record-right-bottom">
-                    Total: {payments.length} payments
-                  </div>
-                </div>
-
-                <div className="dashboard-record-arrow">
-                  ➜
+            <div className="hero-right">
+              <div className="hero-illustration">
+                <div className="illustration-main">🕌</div>
+                <div className="illustration-icons">
+                  <span>🧮</span>
+                  <span>💰</span>
+                  <span>💳</span>
+                  <span>⭐</span>
                 </div>
               </div>
             </div>
           </div>
+        </section>
 
-          <aside className="dashboard-card dashboard-activity-card">
-            <div className="dashboard-card-header">
-              <h2>Recent Activity</h2>
+        {/* Dashboard Summary Cards */}
+        <section className="dashboard-summary">
+          <div className="summary-grid">
+            <div className="summary-card">
+              <div className="summary-icon">
+                <span>💰</span>
+              </div>
+              <div className="summary-content">
+                <h3 className="summary-title">Total Nisab</h3>
+                <p className="summary-value">
+                  RM {Number(currentNisab.value).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </p>
+              </div>
             </div>
 
-            <div className="dashboard-activity-list">
-              {activities.map((item) => (
-                <div key={item.id} className="dashboard-activity-item">
-                  <div className={`dashboard-activity-icon ${item.type}`}>
-                    <ActivityIcon type={item.type} />
-                  </div>
-
-                  <div className="dashboard-activity-text">
-                    <div className="dashboard-activity-title">{item.title}</div>
-                    <div className="dashboard-activity-subtitle">
-                      {item.subtitle}
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="summary-card">
+              <div className="summary-icon">
+                <span>📊</span>
+              </div>
+              <div className="summary-content">
+                <h3 className="summary-title">Zakat Rate</h3>
+                <p className="summary-value">2.5%</p>
+                <p className="summary-note">According to Syariah</p>
+              </div>
             </div>
-          </aside>
-        </div>
+
+            <div className="summary-card">
+              <div className="summary-icon">
+                <span>✅</span>
+              </div>
+              <div className="summary-content">
+                <h3 className="summary-title">System Status</h3>
+                <p className="summary-value">Ready to Calculate</p>
+                <p className="summary-note">All systems operational</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Learn About Zakat Section */}
+        <section className="dashboard-education-section">
+          <div className="dashboard-education-header">
+            <h2 className="dashboard-education-title">Learn About Zakat</h2>
+            <p className="dashboard-education-subtitle">
+              Understand zakat, business zakat, and the benefits of paying zakat.
+            </p>
+          </div>
+
+          <div className="dashboard-education-grid">
+            {/* Card 1: What is Zakat */}
+            <div className="dashboard-education-card">
+              <div className="education-gold-accent"></div>
+              <div className="education-icon-container">
+                <span className="education-icon">💝</span>
+              </div>
+              <h3 className="dashboard-education-card-title">What is Zakat?</h3>
+              <p className="dashboard-education-card-content">
+                Zakat is a compulsory charitable contribution in Islam for Muslims who meet the required financial threshold (nisab). It helps purify wealth and supports those in need, promoting fairness and social welfare in society.
+              </p>
+            </div>
+
+            {/* Card 2: What is Business Zakat */}
+            <div className="dashboard-education-card">
+              <div className="education-gold-accent"></div>
+              <div className="education-icon-container">
+                <span className="education-icon">🏢</span>
+              </div>
+              <h3 className="dashboard-education-card-title">What is Business Zakat?</h3>
+              <p className="dashboard-education-card-content">
+                Business zakat (Zakat Perniagaan) is a mandatory zakat imposed on business assets and profits that meet the nisab requirement. It is calculated annually to ensure businesses contribute fairly to the welfare of the community.
+              </p>
+            </div>
+
+            {/* Card 3: Benefits of Paying Zakat */}
+            <div className="dashboard-education-card">
+              <div className="education-gold-accent"></div>
+              <div className="education-icon-container">
+                <span className="education-icon">✨</span>
+              </div>
+              <h3 className="dashboard-education-card-title">Benefits of Paying Zakat</h3>
+              <div className="dashboard-education-benefits">
+                <div className="benefit-item">✔️ Purifies wealth and income</div>
+                <div className="benefit-item">✔️ Helps people in need</div>
+                <div className="benefit-item">✔️ Strengthens the Muslim community</div>
+                <div className="benefit-item">✔️ Encourages financial discipline</div>
+                <div className="benefit-item">✔️ Brings blessings (barakah) to business</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer className="dashboard-footer">
+          © {currentNisab.year} Zakat Organisation Portal
+        </footer>
       </div>
 
-      {openPanel === "users" && (
-        <FullScreenPanel
-          title="Registered Users"
-          columns={["ID", "Name", "Email", "Status", "Registered At"]}
-          rows={users.map((u) => [
-            u.id,
-            u.name,
-            u.email,
-            u.status,
-            u.registeredAt,
-          ])}
-          onClose={() => setOpenPanel(null)}
-        />
-      )}
-
-      {openPanel === "calculations" && (
-        <FullScreenPanel
-          title="Calculation Records"
-          columns={["ID", "Name", "Method", "Amount", "Status", "Created At"]}
-          rows={calculations.map((c) => [
-            c.id,
-            c.name,
-            c.method,
-            `RM ${c.amount}`,
-            c.status,
-            c.createdAt,
-          ])}
-          onClose={() => setOpenPanel(null)}
-        />
-      )}
-
-      {openPanel === "payments" && (
-        <FullScreenPanel
-          title="Payment Records"
-          columns={["ID", "Name", "Gateway", "Amount", "Status", "Paid At"]}
-          rows={payments.map((p) => [
-            p.id,
-            p.name,
-            p.gateway,
-            `RM ${p.amount}`,
-            p.status,
-            p.paidAt,
-          ])}
-          onClose={() => setOpenPanel(null)}
-        />
-      )}
-
-      <footer className="dashboard-footer">
-        © {currentNisab.year} Zakat Organisation Portal
-      </footer>
-    </div>
+      <SidebarDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
+      <Chatbot />
+    </>
   );
 }

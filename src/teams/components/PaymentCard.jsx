@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useLanguage } from "../context/LanguageContext";
+import { getTranslationSection } from "../translations/translations";
 
 export default function PaymentCard({ payment, onPay, onBack }) {
+  const { language } = useLanguage();
+  const t = getTranslationSection(language, 'paymentPage');
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handlePayClick = () => {
@@ -58,9 +62,9 @@ export default function PaymentCard({ payment, onPay, onBack }) {
         transition={{ delay: 0.2 }}
       >
         <div>
-          <h2 className="card-title payment-card-title">Payment Details</h2>
+          <h2 className="card-title payment-card-title">{t.paymentDetails}</h2>
           <p className="payment-card-subtitle">
-            Secure settlement for your zakat payment through the selected gateway.
+            {t.secureSettlement}
           </p>
         </div>
         <motion.span
@@ -84,7 +88,7 @@ export default function PaymentCard({ payment, onPay, onBack }) {
         <motion.div className="payment-detail-row premium-detail-row" variants={rowVariants}>
           <div className="detail-icon">🔐</div>
           <div className="detail-content">
-            <span className="label">Payment ID</span>
+            <span className="label">{t.paymentId}</span>
             <span className="value">{payment.paymentId}</span>
           </div>
         </motion.div>
@@ -92,7 +96,7 @@ export default function PaymentCard({ payment, onPay, onBack }) {
         <motion.div className="payment-detail-row premium-detail-row" variants={rowVariants}>
           <div className="detail-icon">💳</div>
           <div className="detail-content">
-            <span className="label">Gateway</span>
+            <span className="label">{t.gateway}</span>
             <span className="value">{payment.gateway}</span>
           </div>
         </motion.div>
@@ -100,7 +104,7 @@ export default function PaymentCard({ payment, onPay, onBack }) {
         <motion.div className="payment-detail-row premium-detail-row" variants={rowVariants}>
           <div className="detail-icon">🏦</div>
           <div className="detail-content">
-            <span className="label">Connected Bank</span>
+            <span className="label">{t.connectedBank}</span>
             <span className="value">FPX / Online Banking</span>
           </div>
         </motion.div>
@@ -111,7 +115,7 @@ export default function PaymentCard({ payment, onPay, onBack }) {
         >
           <div className="detail-icon">✓</div>
           <div className="detail-content">
-            <span className="label">Payment Status</span>
+            <span className="label">{t.paymentStatus}</span>
             <span className="value payment-status-value">{payment.status}</span>
           </div>
         </motion.div>
@@ -125,7 +129,7 @@ export default function PaymentCard({ payment, onPay, onBack }) {
         whileHover={{ scale: 1.02 }}
       >
         <div className="amount-header">
-          <p className="amount-label">Amount to Pay</p>
+          <p className="amount-label">{t.amountToPay}</p>
           <span className="amount-icon">💰</span>
         </div>
         <motion.h2
@@ -147,7 +151,7 @@ export default function PaymentCard({ payment, onPay, onBack }) {
       >
         <div className="security-icon">🛡️</div>
         <div className="security-content">
-          <p className="security-title">Secure Payment</p>
+          <p className="security-title">{t.securePayment}</p>
           <p className="security-text">
             Your payment is encrypted and processed through a trusted zakat partner. All transactions are PCI DSS compliant.
           </p>

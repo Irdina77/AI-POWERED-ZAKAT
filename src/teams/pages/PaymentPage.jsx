@@ -1,8 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useLanguage } from "../context/LanguageContext";
+import { getTranslationSection } from "../translations/translations";
 import PaymentCard from "../../../src/teams/components/PaymentCard";
 
 export default function PaymentPage({ payment, onPay, onBack }) {
+  const { language } = useLanguage();
+  const t = getTranslationSection(language, 'paymentPage');
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -37,7 +41,7 @@ export default function PaymentPage({ payment, onPay, onBack }) {
         className="payment-page-header"
         variants={itemVariants}
       >
-        <h1 className="page-title payment-page-title">Payment Gateway</h1>
+        <h1 className="page-title payment-page-title">{t.paymentGateway}</h1>
         <p className="page-subtitle payment-page-subtitle">
           Complete your zakat payment with a secure, polished checkout experience.
         </p>

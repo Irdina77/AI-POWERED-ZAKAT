@@ -1,9 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useLanguage } from "../context/LanguageContext";
+import { getTranslationSection } from "../translations/translations";
 import ResultCard from "../../../src/teams/components/ResultCard";
 import ActionButtons from "../../../src/teams/components/ActionButtons";
 
 export default function ResultPage({ result, onSave, onReset, onProceed }) {
+  const { language } = useLanguage();
+  const t = getTranslationSection(language, 'resultPage');
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -35,7 +39,7 @@ export default function ResultPage({ result, onSave, onReset, onProceed }) {
       animate="visible"
     >
       <motion.div variants={itemVariants}>
-        <h1 className="page-title result-page-title">Zakat Result</h1>
+        <h1 className="page-title result-page-title">{t.zakatResult}</h1>
       </motion.div>
 
       <motion.div variants={itemVariants}>

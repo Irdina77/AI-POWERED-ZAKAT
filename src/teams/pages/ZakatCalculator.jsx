@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
+import { getTranslationSection } from "../translations/translations";
 import "../Styles/ZakatCalculator.css";
 import zakatIcon from "../../teams/assets/zakat-icon.webp";
 import Chatbot from "../components/Chatbot";
@@ -7,6 +9,8 @@ import SidebarDrawer from "../components/SidebarDrawer";
 
 function ZakatCalculator({ onComplete }) {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const t = getTranslationSection(language, 'calculator');
   const [selectedYear, setSelectedYear] = useState("2026");
   const [selectedState, setSelectedState] = useState("Selangor");
   const [businessMethod, setBusinessMethod] = useState("UntungRugi");
@@ -273,7 +277,7 @@ return (
                 </div>
 
                 <p className="zakat-brand-subtitle">
-                  Calculate your business zakat easily and accurately
+                  {t.calculateYourBusinessZakat}
                 </p>
               </div>
 
@@ -326,7 +330,7 @@ return (
             <div className="zakat-section-head">
               <div className="zakat-section-icon">🧮</div>
               <div>
-                <h3 className="zakat-card-title">Enter Financial Data</h3>
+                <h3 className="zakat-card-title">{t.enterFinancialData}</h3>
                 <p className="zakat-card-subtitle">
                   Enter your business information to calculate zakat.
                 </p>
@@ -337,7 +341,7 @@ return (
               <h3 className="zakat-field-group-title">Location & Method</h3>
               <div className="zakat-two-col">
                 <div className="zakat-field-block">
-                  <label className="zakat-label">Year</label>
+                  <label className="zakat-label">{t.year}</label>
                   <select
                     value={selectedYear}
                     onChange={(e) => {
@@ -356,7 +360,7 @@ return (
                 </div>
 
                 <div className="zakat-field-block">
-                  <label className="zakat-label">State</label>
+                  <label className="zakat-label">{t.state}</label>
                   <select
                     value={selectedState}
                     onChange={(e) => {
@@ -376,7 +380,7 @@ return (
               </div>
 
               <div className="zakat-field-block">
-                <label className="zakat-label">Calculation Method</label>
+                <label className="zakat-label">{t.calculationMethod}</label>
                 <select
                   value={businessMethod}
                   onChange={(e) => {
@@ -397,7 +401,7 @@ return (
               {businessMethod === "UntungRugi" ? (
                 <>
                   <div className="zakat-field-block">
-                    <label className="zakat-label">Total Revenue (RM)</label>
+                    <label className="zakat-label">{t.totalRevenue}</label>
                     <input
                       type="number"
                       placeholder="Enter total revenue"
@@ -412,7 +416,7 @@ return (
                   </div>
 
                   <div className="zakat-field-block">
-                    <label className="zakat-label">Total Expenses (RM)</label>
+                    <label className="zakat-label">{t.totalExpenses}</label>
                     <input
                       type="number"
                       placeholder="Enter total expenses"
@@ -429,7 +433,7 @@ return (
               ) : (
                 <>
                   <div className="zakat-field-block">
-                    <label className="zakat-label">Current Assets (RM)</label>
+                    <label className="zakat-label">{t.currentAssets}</label>
                     <input
                       type="number"
                       placeholder="Enter current assets"
@@ -444,7 +448,7 @@ return (
                   </div>
 
                   <div className="zakat-field-block">
-                    <label className="zakat-label">Current Liabilities (RM)</label>
+                    <label className="zakat-label">{t.currentLiabilities}</label>
                     <input
                       type="number"
                       placeholder="Enter current liabilities"
@@ -466,7 +470,7 @@ return (
               type="button"
               onClick={handleCalculate}
             >
-              Calculate Zakat
+              {t.calculateZakat}
             </button>
 
             <div className="zakat-note-box">

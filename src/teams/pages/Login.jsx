@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
+import { getTranslationSection } from "../translations/translations";
 import "../Styles/Login.css";
 import zakatIcon from "../assets/zakat-icon.webp";
 
 function Login({ onLoginSuccess }) {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const t = getTranslationSection(language, 'login');
 
   const [email, setEmail] =
     useState("");
@@ -23,7 +27,7 @@ function Login({ onLoginSuccess }) {
 
     if (!email || !password) {
       setMessage(
-        "⚠️ Please fill in all fields"
+        `⚠️ ${t.allFieldsRequired}`
       );
       return;
     }
@@ -104,7 +108,7 @@ function Login({ onLoginSuccess }) {
 
         setIsLoading(false);
         setMessage(
-          "✅ Login successful!"
+          `✅ ${t.loginSuccessful}`
         );
 
         onLoginSuccess("user");
@@ -112,7 +116,7 @@ function Login({ onLoginSuccess }) {
         setIsLoading(false);
 
         setMessage(
-          "❌ Invalid email or password"
+          `❌ ${t.invalidCredentials}`
         );
       }
     }, 700);
@@ -132,7 +136,7 @@ function Login({ onLoginSuccess }) {
         </h1>
 
         <p className="subtitle">
-          Welcome back! Please sign in
+          {t.welcomeBack}
         </p>
 
         {message && (
@@ -165,7 +169,7 @@ function Login({ onLoginSuccess }) {
               required
             />
             <label htmlFor="email">
-              Email Address
+              {t.email}
             </label>
           </div>
 
@@ -184,7 +188,7 @@ function Login({ onLoginSuccess }) {
               required
             />
             <label htmlFor="password">
-              Password
+              {t.password}
             </label>
           </div>
 
@@ -195,12 +199,12 @@ function Login({ onLoginSuccess }) {
           >
             {isLoading
               ? "Signing In..."
-              : "Sign In"}
+              : t.signIn}
           </button>
         </form>
 
         <div className="auth-link">
-          Don't have an account?{" "}
+          {t.dontHaveAccount}{" "}
           <span
             onClick={() =>
               navigate(
@@ -208,7 +212,7 @@ function Login({ onLoginSuccess }) {
               )
             }
           >
-            Register here
+            {t.register}
           </span>
         </div>
       </div>

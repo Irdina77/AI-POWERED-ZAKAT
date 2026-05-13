@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { useLanguage } from "../context/LanguageContext";
+import { getTranslationSection } from "../translations/translations";
 import "../Styles/Register.css";
 import zakatIcon from "../assets/zakat-icon.webp";
 
 function Register({ onRegisterSuccess, onBackToLogin }) {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const t = getTranslationSection(language, 'register');
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,41 +20,36 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
   const validateForm = () => {
     // Check if all fields are filled
     if (!username.trim()) {
-      setMessage("⚠️ Please enter your full name");
+      setMessage(`⚠️ ${t.enterFullName}`);
       return false;
     }
 
     if (!email.trim()) {
-      setMessage("⚠️ Please enter your email address");
+      setMessage(`⚠️ ${t.enterEmail}`);
       return false;
     }
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
-      setMessage("❌ Please enter a valid email address");
+      setMessage(`❌ ${t.validEmail}`);
       return false;
     }
 
     if (!password) {
-      setMessage("⚠️ Please enter a password");
+      setMessage(`⚠️ ${t.enterPassword}`);
       return false;
     }
 
     if (password.length < 6) {
-      setMessage("❌ Password must be at least 6 characters");
+      setMessage(`❌ ${t.passwordMinLength}`);
       return false;
     }
 
     return true;
   };
 
-  const getStoredUsers = () => {
-    const stored = localStorage.getItem("registeredUsers");
-    return stored ? JSON.parse(stored) : [];
-  };
-
-  const handleCreateAccount = (e) => {
+  const handleCreateAccount = async (e) => {
     e.preventDefault();
     setMessage("");
 
@@ -56,26 +57,11 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
       return;
     }
 
-    const normalizedEmail = email.trim().toLowerCase();
-    const users = getStoredUsers();
-
-    if (users.some((user) => user.email === normalizedEmail)) {
-      setMessage("⚠️ An account with this email already exists");
-      return;
-    }
-
     setIsLoading(true);
 
-    setTimeout(() => {
-      const newUser = {
-        username: username.trim(),
-        email: normalizedEmail,
-        password,
-      };
-
-      const updatedUsers = [...users, newUser];
-      localStorage.setItem("registeredUsers", JSON.stringify(updatedUsers));
-
+    try {
+      await createUserWithEmailAndPassword(auth, email.trim(), password);
+      
       setIsLoading(false);
       setMessage("✅ Account created successfully! Redirecting to login...");
 
@@ -87,8 +73,26 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
       setTimeout(() => {
         onRegisterSuccess();
         navigate('/login');
-      }, 1000);
-    }, 800);
+      }, 1500);
+    } catch (error) {
+      setIsLoading(false);
+      
+      // Handle Firebase errors
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          setMessage("⚠️ An account with this email already exists");
+          break;
+        case 'auth/weak-password':
+          setMessage("❌ Password is too weak. Please choose a stronger password");
+          break;
+        case 'auth/invalid-email':
+          setMessage("❌ Invalid email address");
+          break;
+        default:
+          setMessage("❌ Registration failed. Please try again");
+          break;
+      }
+    }
   };
 
   return (
@@ -119,7 +123,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
               disabled={isLoading}
               required 
             />
-            <label htmlFor="user">Full Name</label>
+            <label htmlFor="user">{t.fullName}</label>
           </div>
 
           <div className="floating-group">
@@ -132,7 +136,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
               disabled={isLoading}
               required 
             />
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="email">{t.email}</label>
           </div>
 
           <div className="floating-group">
@@ -145,7 +149,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
               disabled={isLoading}
               required 
             />
-            <label htmlFor="pass">Password</label>
+            <label htmlFor="pass">{t.password}</label>
           </div>
 
           <button 
@@ -153,12 +157,12 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
             className="btn-glass-gold" 
             disabled={isLoading}
           >
-            {isLoading ? "Creating Account..." : "Create Account"}
+            {isLoading ? "Creating Account..." : t.createAccount}
           </button>
         </form>
 
         <div className="auth-link">
-          Already have an account? <span onClick={() => navigate('/login')}>Sign in here</span>
+          {t.alreadyHaveAccount} <span onClick={() => navigate('/login')}>Sign in here</span>
         </div>
       </div>
     </div>

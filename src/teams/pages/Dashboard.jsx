@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
+import { getTranslationSection } from "../translations/translations";
 import "../Styles/Dashboard.css";
 import zakatIcon from "../../teams/assets/zakat-icon.webp";
 import Chatbot from "../components/Chatbot";
@@ -27,6 +29,8 @@ export default function Dashboard({
   onGoNisab,
 }) {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const t = getTranslationSection(language, 'homepage');
   const [currentTime, setCurrentTime] = useState(new Date());
   const [openPanel, setOpenPanel] = useState(null);
   const [showSettingMenu, setShowSettingMenu] = useState(false);
@@ -120,18 +124,18 @@ export default function Dashboard({
         <section className="dashboard-hero">
           <div className="hero-card">
             <div className="hero-left">
-              <p className="hero-greeting">ASSALAMUALAIKUM, WELCOME BACK</p>
+              <p className="hero-greeting">{t.greeting}</p>
               <h2 className="hero-username">Irdina</h2>
               <p className="hero-email">irdina@zakatnow.com</p>
               <p className="hero-description">
-                Manage your business zakat easily using AI-powered zakat calculation and payment assistance.
+                {t.description}
               </p>
               <div className="hero-buttons">
                 <button className="hero-primary-btn" onClick={() => navigate('/calculator')}>
-                  Open Kalkulator Zakat
+                  {t.openCalculator}
                 </button>
                 <button className="hero-secondary-btn" onClick={() => navigate('/nisab')}>
-                  View Nisab Tahunan
+                  {t.viewNisab}
                 </button>
               </div>
             </div>

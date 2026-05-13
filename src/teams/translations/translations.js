@@ -49,8 +49,8 @@ export const translations = {
 
     // HOMEPAGE
     homepage: {
-      greeting: 'ASSALAMUALAIKUM, WELCOME BACK',
-      description: 'Manage your business zakat easily using AI-powered zakat calculation and payment assistance.',
+      greeting: 'Welcome Back',
+      description: 'Manage your business zakat easily',
       openCalculator: 'Open Zakat Calculator',
       viewNisab: 'View Annual Nisab',
       learnAboutZakat: 'Learn About Zakat',
@@ -77,11 +77,14 @@ export const translations = {
       calculationMethod: 'Calculation Method',
       state: 'State',
       year: 'Year',
-      totalRevenue: 'Total Revenue',
-      totalExpenses: 'Total Expenses',
+      totalRevenue: 'Total Revenue (RM)',
+      totalExpenses: 'Total Expenses (RM)',
+      currentAssets: 'Current Assets (RM)',
+      currentLiabilities: 'Current Liabilities (RM)',
       calculateZakat: 'Calculate Zakat',
       businessMethod: 'Business Method',
       investmentMethod: 'Investment Method',
+      calculateYourBusinessZakat: 'Calculate your business zakat easily and accurately',
     },
 
     // RESULT PAGE
@@ -93,6 +96,14 @@ export const translations = {
       nisabStatus: 'Nisab Status:',
       method: 'Method:',
       proceedToPayment: 'Proceed to Payment',
+      zakatResult: 'Zakat Result',
+      calculationSummary: 'Calculation Summary',
+      clearBreakdown: 'A clear breakdown of your zakat result and next steps.',
+      zakatAmount: 'Zakat Amount',
+      calculationMethod: 'Calculation Method',
+      paymentStatus: 'Payment Status',
+      saveResult: 'Save Result',
+      reset: 'Reset',
     },
 
     // PAYMENT PAGE
@@ -105,6 +116,14 @@ export const translations = {
       paymentAmount: 'Payment Amount:',
       confirmPayment: 'Confirm Payment',
       paymentStatus: 'Payment Status',
+      paymentGateway: 'Payment Gateway',
+      paymentDetails: 'Payment Details',
+      secureSettlement: 'Secure settlement for your zakat payment through the selected gateway.',
+      paymentId: 'Payment ID',
+      gateway: 'Gateway',
+      connectedBank: 'Connected Bank',
+      amountToPay: 'Amount to Pay',
+      securePayment: 'Secure Payment',
     },
 
     // TRANSFER PAGE
@@ -130,6 +149,8 @@ export const translations = {
       register: 'Register',
       invalidCredentials: 'Invalid email or password',
       allFieldsRequired: 'All fields are required',
+      welcomeBack: 'Welcome back! Please sign in',
+      loginSuccessful: 'Login successful!',
     },
 
     // REGISTER PAGE
@@ -146,6 +167,12 @@ export const translations = {
       passwordsMustMatch: 'Passwords must match',
       allFieldsRequired: 'All fields are required',
       accountCreated: 'Account created successfully',
+      enterFullName: 'Please enter your full name',
+      enterEmail: 'Please enter your email address',
+      validEmail: 'Please enter a valid email address',
+      enterPassword: 'Please enter a password',
+      passwordMinLength: 'Password must be at least 6 characters',
+      createAccount: 'Create Account',
     },
 
     // COMMON
@@ -212,8 +239,8 @@ export const translations = {
 
     // HOMEPAGE
     homepage: {
-      greeting: 'ASSALAMUALAIKUM, SELAMAT KEMBALI',
-      description: 'Urus zakat perniagaan anda dengan mudah menggunakan pengiraan zakat bertenaga AI dan bantuan pembayaran.',
+      greeting: 'Selamat Kembali',
+      description: 'Urus zakat perniagaan anda dengan mudah',
       openCalculator: 'Buka Kalkulator Zakat',
       viewNisab: 'Lihat Nisab Tahunan',
       learnAboutZakat: 'Pelajari Tentang Zakat',
@@ -240,11 +267,14 @@ export const translations = {
       calculationMethod: 'Kaedah Pengiraan',
       state: 'Negeri',
       year: 'Tahun',
-      totalRevenue: 'Jumlah Pendapatan',
-      totalExpenses: 'Jumlah Perbelanjaan',
+      totalRevenue: 'Jumlah Pendapatan (RM)',
+      totalExpenses: 'Jumlah Perbelanjaan (RM)',
+      currentAssets: 'Aset Semasa (RM)',
+      currentLiabilities: 'Liabiliti Semasa (RM)',
       calculateZakat: 'Kira Zakat',
       businessMethod: 'Kaedah Perniagaan',
       investmentMethod: 'Kaedah Pelaburan',
+      calculateYourBusinessZakat: 'Kira zakat perniagaan anda dengan mudah dan tepat',
     },
 
     // RESULT PAGE
@@ -256,6 +286,14 @@ export const translations = {
       nisabStatus: 'Status Nisab:',
       method: 'Kaedah:',
       proceedToPayment: 'Teruskan ke Pembayaran',
+      zakatResult: 'Keputusan Zakat',
+      calculationSummary: 'Ringkasan Pengiraan',
+      clearBreakdown: 'Pecahan jelas keputusan zakat anda dan langkah seterusnya.',
+      zakatAmount: 'Jumlah Zakat',
+      calculationMethod: 'Kaedah Pengiraan',
+      paymentStatus: 'Status Pembayaran',
+      saveResult: 'Simpan Keputusan',
+      reset: 'Tetapkan Semula',
     },
 
     // PAYMENT PAGE
@@ -268,6 +306,14 @@ export const translations = {
       paymentAmount: 'Jumlah Pembayaran:',
       confirmPayment: 'Sahkan Pembayaran',
       paymentStatus: 'Status Pembayaran',
+      paymentGateway: 'Pintu Gerbang Pembayaran',
+      paymentDetails: 'Butiran Pembayaran',
+      secureSettlement: 'Penyelesaian selamat untuk pembayaran zakat anda melalui pintu gerbang yang dipilih.',
+      paymentId: 'ID Pembayaran',
+      gateway: 'Pintu Gerbang',
+      connectedBank: 'Bank Bersambung',
+      amountToPay: 'Jumlah untuk Dibayar',
+      securePayment: 'Pembayaran Selamat',
     },
 
     // TRANSFER PAGE
@@ -293,6 +339,8 @@ export const translations = {
       register: 'Daftar',
       invalidCredentials: 'E-mel atau kata laluan tidak sah',
       allFieldsRequired: 'Semua medan diperlukan',
+      welcomeBack: 'Selamat kembali! Sila daftar masuk',
+      loginSuccessful: 'Log masuk berjaya!',
     },
 
     // REGISTER PAGE
@@ -309,6 +357,12 @@ export const translations = {
       passwordsMustMatch: 'Kata laluan mesti sepadan',
       allFieldsRequired: 'Semua medan diperlukan',
       accountCreated: 'Akaun berjaya dibuat',
+      enterFullName: 'Sila masukkan nama lengkap anda',
+      enterEmail: 'Sila masukkan alamat e-mel anda',
+      validEmail: 'Sila masukkan alamat e-mel yang sah',
+      enterPassword: 'Sila masukkan kata laluan',
+      passwordMinLength: 'Kata laluan mesti sekurang-kurangnya 6 aksara',
+      createAccount: 'Buat Akaun',
     },
 
     // COMMON

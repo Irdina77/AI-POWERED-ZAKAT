@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useLanguage } from "../context/LanguageContext";
+import { getTranslationSection } from "../translations/translations";
 
 export default function ActionButtons({ onSave, onReset, onProceed }) {
+  const { language } = useLanguage();
+  const t = getTranslationSection(language, 'resultPage');
   const [loadingStates, setLoadingStates] = useState({
     save: false,
     reset: false,
@@ -26,7 +30,7 @@ export default function ActionButtons({ onSave, onReset, onProceed }) {
         disabled={Object.values(loadingStates).some((state) => state)}
       >
         <span className="btn-icon">💾</span>
-        <span className="btn-text">Save Result</span>
+        <span className="btn-text">{t.saveResult}</span>
         {loadingStates.save && <span className="btn-spinner"></span>}
       </button>
 
@@ -36,7 +40,7 @@ export default function ActionButtons({ onSave, onReset, onProceed }) {
         disabled={Object.values(loadingStates).some((state) => state)}
       >
         <span className="btn-icon">🔄</span>
-        <span className="btn-text">Reset</span>
+        <span className="btn-text">{t.reset}</span>
         {loadingStates.reset && <span className="btn-spinner"></span>}
       </button>
 
@@ -48,7 +52,7 @@ export default function ActionButtons({ onSave, onReset, onProceed }) {
         disabled={Object.values(loadingStates).some((state) => state)}
       >
         <span className="btn-icon">💳</span>
-        <span className="btn-text">Proceed to Payment</span>
+        <span className="btn-text">{t.proceedToPayment}</span>
         {loadingStates.proceed && <span className="btn-spinner"></span>}
       </button>
     </div>

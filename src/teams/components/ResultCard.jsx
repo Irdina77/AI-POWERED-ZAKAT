@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLanguage } from "../context/LanguageContext";
+import { getTranslationSection } from "../translations/translations";
 
 export default function ResultCard({ result }) {
+  const { language } = useLanguage();
+  const t = getTranslationSection(language, 'resultPage');
   const [displayAmount, setDisplayAmount] = useState(0);
 
   // Animated counter for zakat amount
@@ -94,8 +98,8 @@ export default function ResultCard({ result }) {
         animate="visible"
       >
         <div>
-          <h2 className="card-title result-card-title">Calculation Summary</h2>
-          <p className="summary-subtitle">A clear breakdown of your zakat result and next steps.</p>
+          <h2 className="card-title result-card-title">{t.zakatSummary}</h2>
+          <p className="summary-subtitle">{t.clearBreakdown}</p>
         </div>
         <motion.span
           className={`status-chip ${
@@ -124,7 +128,7 @@ export default function ResultCard({ result }) {
       >
         <motion.div className="summary-item result-item-premium" variants={itemVariants}>
           <div className="item-icon">💰</div>
-          <span className="item-label">Zakat Amount</span>
+          <span className="item-label">{t.zakatAmount}</span>
           <motion.span
             className="item-value amount-animated"
             initial={{ opacity: 0 }}
@@ -137,13 +141,13 @@ export default function ResultCard({ result }) {
 
         <motion.div className="summary-item result-item-premium" variants={itemVariants}>
           <div className="item-icon">📊</div>
-          <span className="item-label">Calculation Method</span>
+          <span className="item-label">{t.calculationMethod}</span>
           <span className="item-value">{result.method}</span>
         </motion.div>
 
         <motion.div className="summary-item result-item-premium" variants={itemVariants}>
           <div className="item-icon">✓</div>
-          <span className="item-label">Payment Status</span>
+          <span className="item-label">{t.paymentStatus}</span>
           <span className="item-value">
             {result.nisabStatus === "Eligible" ? "Payable" : "Not due"}
           </span>

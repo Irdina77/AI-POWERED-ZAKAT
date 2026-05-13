@@ -1,26 +1,46 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase';
+import { useLanguage } from '../context/LanguageContext';
+import { getTranslationSection } from '../translations/translations';
 import SidebarDrawer from '../components/SidebarDrawer';
 import '../Styles/HomePage.css';
 import zakatIcon from '../../teams/assets/zakat-icon.webp';
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const t = getTranslationSection(language, 'homepage');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [userName, setUserName] = useState('Valued User');
-  const [userEmail, setUserEmail] = useState('user@example.com');
+  const [userEmail, setUserEmail] = useState('');
   const [nisabValue, setNisabValue] = useState(42047);
 
   useEffect(() => {
-    const email = localStorage.getItem('userEmail') || '';
-    setUserEmail(email);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const email = user.email || '';
+        const displayName = user.displayName?.trim();
+        const username = email.split('@')[0];
 
-    const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-    const currentUser = users.find((user) => user.email === email);
-    if (currentUser) {
-      setUserName(currentUser.fullName || currentUser.username || 'Valued User');
-    }
+        setUserEmail(email);
+        setUserName(
+          displayName ||
+            (username
+              ? username.charAt(0).toUpperCase() + username.slice(1)
+              : 'Valued User')
+        );
+      } else {
+        setUserName('Valued User');
+        setUserEmail('');
+      }
+    });
 
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
     const savedNisab = JSON.parse(localStorage.getItem('nisabData') || '{}');
     if (savedNisab.goldPrice) {
       setNisabValue(Number(savedNisab.goldPrice) * 85);
@@ -76,14 +96,14 @@ export default function HomePage() {
                 <h3 className="home-user-name">{userName}</h3>
                 <p className="home-user-email">{userEmail}</p>
                 <p className="home-description">
-                  Manage your business zakat easily using AI-powered zakat calculation and payment assistance.
+                  {t.description}
                 </p>
                 <div className="home-hero-buttons">
                   <button onClick={() => navigate('/calculator')} className="home-btn-primary">
-                    Open Kalkulator Zakat
+                    {t.openCalculator}
                   </button>
                   <button onClick={() => navigate('/nisab')} className="home-btn-secondary">
-                    View Nisab Tahunan
+                    {t.viewNisab}
                   </button>
                 </div>
               </div>

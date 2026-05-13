@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 import { useLanguage } from "../context/LanguageContext";
 import { getTranslationSection } from "../translations/translations";
 import "../Styles/Login.css";
@@ -22,104 +24,32 @@ function Login({ onLoginSuccess }) {
   const [isLoading, setIsLoading] =
     useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
-      setMessage(
-        `⚠️ ${t.allFieldsRequired}`
-      );
+      setMessage(`⚠️ ${t.allFieldsRequired}`);
       return;
     }
 
     setIsLoading(true);
     setMessage("");
 
-    setTimeout(() => {
-      const normalizedEmail =
-        email.trim().toLowerCase();
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        email.trim().toLowerCase(),
+        password
+      );
 
-      // ===================
-      // ADMIN LOGIN
-      // ===================
-      if (
-        normalizedEmail ===
-          "admin@gmail.com" &&
-        password === "123456"
-      ) {
-        localStorage.setItem(
-          "isLoggedIn",
-          "true"
-        );
-
-        localStorage.setItem(
-          "userEmail",
-          normalizedEmail
-        );
-
-        localStorage.setItem(
-          "userRole",
-          "admin"
-        );
-
-        setIsLoading(false);
-        setMessage(
-          "✅ Login successful!"
-        );
-
-        onLoginSuccess("admin");
-        return;
-      }
-
-      // ===================
-      // REGISTERED USERS
-      // ===================
-      const storedUsers =
-        JSON.parse(
-          localStorage.getItem(
-            "registeredUsers"
-          ) || "[]"
-        );
-
-      const matchedUser =
-        storedUsers.find(
-          (user) =>
-            user.email ===
-              normalizedEmail &&
-            user.password ===
-              password
-        );
-
-      if (matchedUser) {
-        localStorage.setItem(
-          "isLoggedIn",
-          "true"
-        );
-
-        localStorage.setItem(
-          "userEmail",
-          normalizedEmail
-        );
-
-        localStorage.setItem(
-          "userRole",
-          "user"
-        );
-
-        setIsLoading(false);
-        setMessage(
-          `✅ ${t.loginSuccessful}`
-        );
-
-        onLoginSuccess("user");
-      } else {
-        setIsLoading(false);
-
-        setMessage(
-          `❌ ${t.invalidCredentials}`
-        );
-      }
-    }, 700);
+      setMessage(`✅ ${t.loginSuccessful}`);
+      onLoginSuccess("user");
+    } catch (error) {
+      setMessage(`❌ ${t.invalidCredentials}`);
+      console.error("Firebase sign-in error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

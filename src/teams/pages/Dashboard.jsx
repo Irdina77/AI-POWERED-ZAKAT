@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
 import { useLanguage } from "../context/LanguageContext";
 import { getTranslationSection } from "../translations/translations";
 import "../Styles/Dashboard.css";
@@ -35,11 +37,36 @@ export default function Dashboard({
   const [openPanel, setOpenPanel] = useState(null);
   const [showSettingMenu, setShowSettingMenu] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [userName, setUserName] = useState('Valued User');
+  const [userEmail, setUserEmail] = useState('');
   const settingMenuRef = useRef(null);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const email = user.email || '';
+        const displayName = user.displayName?.trim();
+        const username = email.split('@')[0];
+
+        setUserEmail(email);
+        setUserName(
+          displayName ||
+            (username
+              ? username.charAt(0).toUpperCase() + username.slice(1)
+              : 'Valued User')
+        );
+      } else {
+        setUserName('Valued User');
+        setUserEmail('');
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -115,7 +142,7 @@ export default function Dashboard({
             </button>
 
             <div className="zakat-user-chip">
-              👤 Irdina
+              👤 {userName}
             </div>
           </div>
         </header>
@@ -125,8 +152,8 @@ export default function Dashboard({
           <div className="hero-card">
             <div className="hero-left">
               <p className="hero-greeting">{t.greeting}</p>
-              <h2 className="hero-username">Irdina</h2>
-              <p className="hero-email">irdina@zakatnow.com</p>
+              <h2 className="hero-username">{userName}</h2>
+              <p className="hero-email">{userEmail}</p>
               <p className="hero-description">
                 {t.description}
               </p>

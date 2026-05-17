@@ -1913,3 +1913,1030 @@ body {
   }
 }
 
+/* =========================================================
+   BANK GRID + CLEAR BANK NAME TEXT
+========================================================= */
+
+.bank-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
+
+/* =========================================================
+   BANK CARD
+========================================================= */
+
+.bank-tile {
+  position: relative;
+  min-height: 125px;
+  padding: 24px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #ffffff, #fffdf7);
+  border: 1.5px solid rgba(200, 155, 60, 0.22);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.06),
+    0 2px 10px rgba(200, 155, 60, 0.08);
+  transition: all 0.35s ease;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.bank-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top right,
+    rgba(255, 215, 0, 0.08),
+    transparent 40%
+  );
+  pointer-events: none;
+}
+
+.bank-tile:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.12),
+    0 6px 20px rgba(200, 155, 60, 0.16);
+  border-color: #d4a017;
+}
+
+.bank-tile.selected,
+.bank-tile.active {
+  border: 2px solid #d4a017;
+  background: linear-gradient(135deg, #fff9e8, #fff1c9);
+  box-shadow:
+    0 22px 45px rgba(212, 160, 23, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+/* =========================================================
+   BANK LOGO
+========================================================= */
+
+.real-bank-logo {
+  width: 145px;
+  height: 72px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.08));
+}
+
+/* =========================================================
+   BANK TEXT - BIGGER AND CLEAR
+========================================================= */
+
+.bank-tile strong,
+.bank-name {
+  font-size: 1.35rem !important;
+  font-weight: 900 !important;
+  color: #111827 !important;
+  line-height: 1.25;
+  letter-spacing: 0.2px;
+  font-family: "Poppins", "Inter", "Segoe UI", Arial, sans-serif;
+  white-space: normal;
+}
+
+.bank-tile span:not(.bank-tick):not(.step-number),
+.bank-subtitle {
+  font-size: 1rem;
+  font-weight: 650;
+  color: #6b7280;
+  font-family: "Poppins", "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+.bank-tile-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* =========================================================
+   SELECTED ICON
+========================================================= */
+
+.bank-tick,
+.bank-selected-icon {
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4a017, #a56d10);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  font-weight: 900;
+  box-shadow: 0 6px 16px rgba(212, 160, 23, 0.35);
+}
+
+/* =========================================================
+   BANK LOGIN PAGE
+========================================================= */
+
+.bank-login-page {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.bank-topbar {
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 36px;
+}
+
+.bank-topbar h2 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.bank-login-logo {
+  width: 220px;
+  height: 90px;
+  object-fit: contain;
+  background: white;
+  padding: 12px;
+  border-radius: 18px;
+  display: block;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.bank-login-content {
+  display: grid;
+  grid-template-columns: 1.5fr 0.9fr;
+  gap: 40px;
+  padding: 42px;
+  background: #fff;
+}
+
+.bank-login-form-real {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bank-login-form-real h3 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #111827;
+  font-weight: 900;
+}
+
+.bank-login-form-real p {
+  color: #6b7280;
+  margin-bottom: 14px;
+}
+
+.bank-login-form-real label {
+  font-weight: 800;
+  color: #374151;
+}
+
+.bank-login-form-real input {
+  height: 58px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.bank-login-form-real input:focus {
+  outline: none;
+  border-color: #d4a017;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.12);
+}
+
+.bank-login-btn-real {
+  margin-top: 20px;
+  height: 60px;
+  border: none;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 900;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bank-login-btn-real:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+}
+
+.bank-link-btn {
+  background: transparent;
+  border: none;
+  color: #2563eb;
+  font-weight: 700;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.bank-security-card {
+  background: linear-gradient(135deg, #f8f5ef, #ffffff);
+  border-radius: 24px;
+  padding: 34px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.security-shield {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+}
+
+/* =========================================================
+   OTHER PAYMENT FLOW
+========================================================= */
+
+.jompay-card-real,
+.payment-success-real {
+  background: #fff;
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 12px 30px rgba(111, 78, 18, 0.12);
+}
+
+.jompay-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jompay-head strong {
+  background: #172554;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 1.6rem;
+}
+
+.jompay-details,
+.success-receipt-real {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin: 28px 0;
+}
+
+.jompay-details div,
+.success-receipt-real div {
+  background: #fff8e8;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.jompay-details span,
+.success-receipt-real span {
+  color: #7a6136;
+  font-weight: 700;
+}
+
+.jompay-details strong,
+.success-receipt-real strong {
+  display: block;
+  margin-top: 6px;
+  color: #10233f;
+  font-size: 1.25rem;
+}
+
+.payment-success-real {
+  text-align: center;
+}
+
+.success-circle {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #1f8b4c;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+}
+
+.success-text {
+  color: #1f8b4c !important;
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+}
+
+.confirm-modal {
+  width: min(720px, 95vw);
+  background: white;
+  border-radius: 28px;
+  padding: 42px;
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+.bismillah {
+  color: #0f7a3d;
+  font-size: 2.8rem;
+  line-height: 1.4;
+  margin-bottom: 20px;
+  font-family: serif;
+}
+
+.confirm-modal h3 {
+  color: #0f7a3d;
+  font-size: 2rem;
+}
+
+.confirm-modal p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .bank-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bank-login-content,
+  .gateway-grid,
+  .payment-summary-box,
+  .fpx-form-grid,
+  .jompay-details,
+  .success-receipt-real {
+    grid-template-columns: 1fr;
+  }
+
+  .bank-tile strong,
+  .bank-name {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .bank-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .real-bank-logo {
+    width: 120px;
+    height: 58px;
+  }
+
+  .bank-login-logo {
+    width: 170px;
+    height: 72px;
+  }
+
+  .bank-tile {
+    min-height: 105px;
+    padding: 18px;
+  }
+
+  .bank-topbar h2 {
+    font-size: 1.5rem;
+  }
+
+  .bank-tile strong,
+  .bank-name {
+    font-size: 1.15rem !important;
+  }
+}
+
+/* =========================================================
+   FIX PAYMENT FLOW LAYOUT
+========================================================= */
+
+.payflow-header,
+.fpx-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 26px 30px;
+  border-bottom: 1px solid rgba(200, 155, 60, 0.18);
+}
+
+.payflow-header h2,
+.fpx-card-header h2 {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #4a3417;
+  margin: 0 0 8px;
+}
+
+.payflow-header p,
+.fpx-card-header p {
+  font-size: 1rem;
+  color: #6b5a3c;
+  margin: 0;
+}
+
+.pay-status,
+.secure-fpx {
+  background: #fff7df;
+  border: 1px solid #e7c76a;
+  color: #8b6526;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.fpx-step-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 90px;
+  margin: 30px 0;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 10px 28px rgba(111, 78, 18, 0.08);
+}
+
+.fpx-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  color: #9ca3af;
+}
+
+.fpx-step.active {
+  color: #8b6526;
+}
+
+.step-number {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #d1d5db;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+}
+
+.fpx-step.active .step-number {
+  background: linear-gradient(135deg, #d4a017, #8b6526);
+}
+
+.fpx-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin: 28px 0;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: 800;
+  color: #4a3417;
+}
+
+.input-group select,
+.input-group input {
+  height: 58px;
+  padding: 0 18px;
+  border-radius: 16px;
+  border: 1.5px solid rgba(200, 155, 60, 0.35);
+  background: white;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* =========================================================
+   BANK GRID + BANK TEXT
+========================================================= */
+
+.bank-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
+
+.bank-tile {
+  position: relative;
+  min-height: 125px;
+  padding: 24px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #ffffff, #fffdf7);
+  border: 1.5px solid rgba(200, 155, 60, 0.22);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.06),
+    0 2px 10px rgba(200, 155, 60, 0.08);
+  transition: all 0.35s ease;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.bank-tile:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.12),
+    0 6px 20px rgba(200, 155, 60, 0.16);
+  border-color: #d4a017;
+}
+
+.bank-tile.selected {
+  border: 2px solid #d4a017;
+  background: linear-gradient(135deg, #fff9e8, #fff1c9);
+}
+
+.real-bank-logo {
+  width: 145px;
+  height: 72px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+.bank-tile-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.bank-name {
+  font-size: 1.35rem !important;
+  font-weight: 900 !important;
+  color: #111827 !important;
+  line-height: 1.25;
+  font-family: "Poppins", "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+.bank-subtitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #6b7280;
+  line-height: 1.3;
+}
+
+.bank-tick {
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4a017, #a56d10);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+}
+
+/* =========================================================
+   PAYMENT SUMMARY + ACTIONS
+========================================================= */
+
+.payment-summary-box {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin: 30px 0;
+  padding: 26px;
+  background: linear-gradient(135deg, #fff8e8, #ffffff);
+  border: 1px solid rgba(200, 155, 60, 0.22);
+  border-radius: 24px;
+  box-shadow: 0 12px 30px rgba(111, 78, 18, 0.08);
+}
+
+.payment-summary-box span {
+  display: block;
+  color: #7a6136;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.payment-summary-box strong {
+  display: block;
+  font-size: 1.5rem;
+  color: #111827;
+  font-weight: 900;
+}
+
+.premium-payment-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.premium-pay-btn,
+.premium-back-btn {
+  height: 62px;
+  border-radius: 18px;
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+.premium-pay-btn {
+  background: linear-gradient(135deg, #d8ae4e, #8b6526);
+  color: white;
+}
+
+.premium-back-btn {
+  background: transparent;
+  border: 2px solid #8b6526;
+  color: #8b6526;
+}
+
+/* =========================================================
+   BANK LOGIN PAGE
+========================================================= */
+
+.bank-login-page {
+  background: white;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.16);
+}
+
+.bank-topbar {
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 36px;
+}
+
+.bank-login-logo {
+  width: 220px;
+  height: 90px;
+  object-fit: contain;
+  background: white;
+  padding: 12px;
+  border-radius: 18px;
+}
+
+.bank-login-content {
+  display: grid;
+  grid-template-columns: 1.5fr 0.9fr;
+  gap: 40px;
+  padding: 42px;
+  background: #fff;
+}
+
+.bank-login-form-real {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bank-login-form-real h3 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #111827;
+  font-weight: 900;
+}
+
+.bank-login-form-real p {
+  color: #6b7280;
+  margin-bottom: 14px;
+}
+
+.bank-login-form-real label {
+  font-weight: 800;
+  color: #374151;
+}
+
+.bank-login-form-real input {
+  height: 58px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  font-size: 1rem;
+}
+
+.bank-login-btn-real {
+  margin-top: 20px;
+  height: 60px;
+  border: none;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.bank-link-btn {
+  background: transparent;
+  border: none;
+  color: #2563eb;
+  font-weight: 700;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.bank-security-card {
+  background: linear-gradient(135deg, #f8f5ef, #ffffff);
+  border-radius: 24px;
+  padding: 34px;
+  text-align: center;
+}
+
+.security-shield {
+  font-size: 3.5rem;
+}
+
+/* =========================================================
+   MODAL + SUCCESS + JOMPAY
+========================================================= */
+
+.jompay-card-real,
+.payment-success-real {
+  background: #fff;
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 12px 30px rgba(111, 78, 18, 0.12);
+}
+
+.jompay-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jompay-head strong {
+  background: #172554;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 1.6rem;
+}
+
+.jompay-details,
+.success-receipt-real {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin: 28px 0;
+}
+
+.jompay-details div,
+.success-receipt-real div {
+  background: #fff8e8;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.payment-success-real {
+  text-align: center;
+}
+
+.success-circle {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #1f8b4c;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+}
+
+.success-text {
+  color: #1f8b4c !important;
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+}
+
+.confirm-modal {
+  width: min(720px, 95vw);
+  background: white;
+  border-radius: 28px;
+  padding: 42px;
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+.bismillah {
+  color: #0f7a3d;
+  font-size: 2.8rem;
+  line-height: 1.4;
+  margin-bottom: 20px;
+  font-family: serif;
+}
+
+.confirm-modal h3 {
+  color: #0f7a3d;
+  font-size: 2rem;
+}
+
+.confirm-modal p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .bank-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bank-login-content,
+  .gateway-grid,
+  .payment-summary-box,
+  .fpx-form-grid,
+  .jompay-details,
+  .success-receipt-real {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .bank-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .real-bank-logo {
+    width: 120px;
+    height: 58px;
+  }
+
+  .bank-login-logo {
+    width: 170px;
+    height: 72px;
+  }
+
+  .bank-tile {
+    min-height: 105px;
+    padding: 18px;
+  }
+
+  .bank-name {
+    font-size: 1.15rem !important;
+  }
+}
+
+/* =========================================================
+   FIX GATEWAY METHOD CARDS - FPX / JOMPAY
+========================================================= */
+
+.gateway-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 30px 0;
+}
+
+.gateway-option {
+  position: relative;
+  min-height: 170px;
+  padding: 28px 30px;
+  border-radius: 24px;
+  border: 2px solid rgba(200, 155, 60, 0.25);
+  background: linear-gradient(135deg, #ffffff, #fffdf7);
+  box-shadow: 0 12px 30px rgba(111, 78, 18, 0.08);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.35s ease;
+}
+
+.gateway-option:hover {
+  transform: translateY(-5px);
+  border-color: #d4a017;
+  box-shadow: 0 18px 40px rgba(111, 78, 18, 0.14);
+}
+
+.gateway-option.selected {
+  border-color: #c89b3c;
+  background: linear-gradient(135deg, #fff9e8, #fff1c9);
+  box-shadow: 0 18px 42px rgba(200, 155, 60, 0.2);
+}
+
+.gateway-check {
+  position: absolute;
+  right: 22px;
+  top: 22px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4a017, #8b6526);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+.gateway-logo {
+  font-size: 2.4rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.fpx-logo {
+  color: #1e2a60;
+}
+
+.jompay-logo {
+  color: #172554;
+}
+
+.gateway-option strong {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #111827;
+  font-family: "Poppins", "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+.gateway-option small {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* supaya button browser default tak nampak */
+.gateway-option,
+.gateway-option:focus,
+.gateway-option:active {
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* responsive */
+@media (max-width: 800px) {
+  .gateway-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gateway-option {
+    min-height: 145px;
+  }
+}

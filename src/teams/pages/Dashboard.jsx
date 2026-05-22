@@ -1,9 +1,4 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
@@ -23,118 +18,51 @@ export default function Dashboard({
   },
 }) {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const t = getTranslationSection(language, "homepage");
 
-  const {
-    language,
-    updateLanguage,
-  } = useLanguage();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [showLogoMenu, setShowLogoMenu] = useState(false);
+  const [showAboutModal, setShowAboutModal] = useState(false);
+  const [showAsnafModal, setShowAsnafModal] = useState(false);
+  const [selectedAsnaf, setSelectedAsnaf] = useState("Fakir");
+  const [userName, setUserName] = useState("Valued User");
+  const [userEmail, setUserEmail] = useState("");
 
-  const t =
-    getTranslationSection(
-      language,
-      "homepage"
-    );
+  const menuRef = useRef(null);
 
-  const [isDrawerOpen,
-    setIsDrawerOpen] =
-    useState(false);
-
-  const [showLogoMenu,
-    setShowLogoMenu] =
-    useState(false);
-
-  const [showAboutModal,
-    setShowAboutModal] =
-    useState(false);
-
-  const [showAsnafModal,
-    setShowAsnafModal] =
-    useState(false);
-
-  const [selectedAsnaf,
-    setSelectedAsnaf] =
-    useState("Fakir");
-
-  const [userName,
-    setUserName] =
-    useState("Valued User");
-
-  const [userEmail,
-    setUserEmail] =
-    useState("");
-
-  const menuRef =
-    useRef(null);
-
-  // ======================
-  // USER AUTH
-  // ======================
   useEffect(() => {
-    const unsubscribe =
-      onAuthStateChanged(
-        auth,
-        (user) => {
-          if (user) {
-            const email =
-              user.email || "";
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const email = user.email || "";
+        const displayName = user.displayName?.trim();
+        const username = email.split("@")[0];
 
-            const displayName =
-              user.displayName?.trim();
+        setUserEmail(email);
 
-            const username =
-              email.split("@")[0];
+        setUserName(
+          displayName ||
+            (username
+              ? username.charAt(0).toUpperCase() + username.slice(1)
+              : "Valued User")
+        );
+      }
+    });
 
-            setUserEmail(
-              email
-            );
-
-            setUserName(
-              displayName ||
-              (username
-                ? username.charAt(
-                  0
-                ).toUpperCase() +
-                username.slice(
-                  1
-                )
-                : "Valued User")
-            );
-          }
-        }
-      );
-
-    return () =>
-      unsubscribe();
+    return () => unsubscribe();
   }, []);
 
-  // ======================
-  // CLOSE MENU
-  // ======================
   useEffect(() => {
-    const handleClickOutside =
-      (event) => {
-        if (
-          menuRef.current &&
-          !menuRef.current.contains(
-            event.target
-          )
-        ) {
-          setShowLogoMenu(
-            false
-          );
-        }
-      };
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowLogoMenu(false);
+      }
+    };
 
-    document.addEventListener(
-      "mousedown",
-      handleClickOutside
-    );
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener(
-        "mousedown",
-        handleClickOutside
-      );
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -142,17 +70,13 @@ export default function Dashboard({
     <>
       <div className="dashboard-page">
         <header className="premium-navbar">
-
           <div className="navbar-container">
 
-            {/* LEFT SIDE */}
+            {/* LEFT LOGO */}
             <div className="navbar-left">
-
               <button
                 className="navbar-logo-button"
-                onClick={() =>
-                  navigate("/dashboard")
-                }
+                onClick={() => navigate("/dashboard")}
               >
                 <img
                   src={zakatIcon}
@@ -170,126 +94,148 @@ export default function Dashboard({
                   </p>
                 </div>
               </button>
-
             </div>
 
-            {/* MENU CENTER */}
+            {/* CENTER NAVIGATION */}
             <nav className="premium-nav-menu">
-
               <button
-                onClick={() =>
-                  navigate("/dashboard")
-                }
+                onClick={() => navigate("/dashboard")}
               >
                 HOME PAGE
               </button>
 
               <button
-                onClick={() =>
-                  navigate("/calculator")
-                }
+                onClick={() => navigate("/calculator")}
               >
                 CALCULATE ZAKAT
               </button>
 
               <button
-                onClick={() =>
-                  navigate("/payment")
-                }
+                onClick={() => navigate("/payment")}
               >
                 PAY ZAKAT
               </button>
 
               <button
-                onClick={() =>
-                  navigate("/check-zakat")
-                }
+                onClick={() => navigate("/nisab")}
               >
-                CHECK ZAKAT
+                NISAB RATE
               </button>
-
             </nav>
 
-            {/* RIGHT MENU BUTTON */}
+            {/* RIGHT HAMBURGER */}
             <div
-              className="navbar-menu-right"
+              className="navbar-menu-right user-navbar-right"
               ref={menuRef}
             >
               <button
-                className="sidebar-toggle"
+                className="admin-hamburger user-hamburger"
                 onClick={() =>
-                  setShowLogoMenu(
-                    !showLogoMenu
-                  )
+                  setShowLogoMenu(!showLogoMenu)
                 }
               >
-                ☰
+                <span className="hamburger-line"></span>
+                <span className="hamburger-line"></span>
+                <span className="hamburger-line"></span>
               </button>
 
               {showLogoMenu && (
-                <div className="logo-dropdown">
+                <div className="user-menu-dropdown">
 
                   <button
+                    className="user-menu-item active"
                     onClick={() => {
-                      setShowAboutModal(true);
+                      navigate("/dashboard");
                       setShowLogoMenu(false);
                     }}
                   >
-                    About Zakat
+                    🏠 Home Page
                   </button>
 
                   <button
+                    className="user-menu-item"
                     onClick={() => {
-                      setShowAsnafModal(true);
+                      navigate("/calculator");
                       setShowLogoMenu(false);
                     }}
                   >
-                    Asnaf Zakat
+                    🧮 Calculate Zakat
                   </button>
 
                   <button
+                    className="user-menu-item"
+                    onClick={() => {
+                      navigate("/business-setup");
+                      setShowLogoMenu(false);
+                    }}
+                  >
+                    🏢 Business Setup
+                  </button>
+
+                  <button
+                    className="user-menu-item"
+                    onClick={() => {
+                      navigate("/nisab");
+                      setShowLogoMenu(false);
+                    }}
+                  >
+                    📈 Nisab Rate
+                  </button>
+
+                  <button
+                    className="user-menu-item"
                     onClick={() => {
                       navigate("/profile");
                       setShowLogoMenu(false);
                     }}
                   >
-                    Profile
+                    👤 Profile
                   </button>
 
                   <button
+                    className="user-menu-item"
                     onClick={() => {
-                      navigate("/settings");
+                      navigate("/payment");
                       setShowLogoMenu(false);
                     }}
                   >
-                    Setting
+                    💳 Pay Zakat
                   </button>
 
+                  <hr className="user-menu-divider" />
+
                   <button
-                    onClick={() => {
-                      localStorage.clear();
-                      navigate("/");
-                    }}
-                  >
-                    Log Out
-                  </button>
+  className="user-menu-item logout"
+  onClick={() => {
+    // CLEAR LOGIN DATA
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("zakat-result");
+
+    // CLOSE MENU
+    setShowLogoMenu(false);
+
+    // REDIRECT TO LOGIN
+    window.location.href = "/login";
+  }}
+>
+  🚪 Log Out
+</button>
 
                 </div>
               )}
             </div>
-
           </div>
-
         </header>
 
-        {/* HERO */}
+        {/* HERO SECTION */}
         <section className="dashboard-hero">
           <div className="hero-card">
 
             <div className="hero-left">
               <p className="hero-greeting">
-                ASSALAMUALAIKUM,
-                WELCOME BACK
+                ASSALAMUALAIKUM, WELCOME BACK
               </p>
 
               <h2 className="hero-username">
@@ -301,9 +247,7 @@ export default function Dashboard({
               </p>
 
               <p className="hero-description">
-                {
-                  t.description
-                }
+                {t.description}
               </p>
 
               <div className="hero-buttons">
@@ -311,25 +255,19 @@ export default function Dashboard({
                 <button
                   className="hero-primary-btn"
                   onClick={() =>
-                    navigate(
-                      "/calculator"
-                    )
+                    navigate("/calculator")
                   }
                 >
-                  Open
-                  Calculator
+                  Open Calculator
                 </button>
 
                 <button
                   className="hero-secondary-btn"
                   onClick={() =>
-                    navigate(
-                      "/payment"
-                    )
+                    navigate("/payment")
                   }
                 >
-                  Pay
-                  Zakat
+                  Pay Zakat
                 </button>
 
               </div>
@@ -343,15 +281,9 @@ export default function Dashboard({
                 </div>
 
                 <div className="illustration-icons">
-                  <span>
-                    🧮
-                  </span>
-                  <span>
-                    💰
-                  </span>
-                  <span>
-                    💳
-                  </span>
+                  <span>🧮</span>
+                  <span>💰</span>
+                  <span>💳</span>
                 </div>
 
               </div>
@@ -371,8 +303,7 @@ export default function Dashboard({
 
               <div className="summary-content">
                 <h3 className="summary-title">
-                  Total
-                  Nisab
+                  Total Nisab
                 </h3>
 
                 <p className="summary-value">
@@ -391,8 +322,7 @@ export default function Dashboard({
 
               <div className="summary-content">
                 <h3 className="summary-title">
-                  Zakat
-                  Rate
+                  Zakat Rate
                 </h3>
 
                 <p className="summary-value">
@@ -419,298 +349,12 @@ export default function Dashboard({
 
           </div>
         </section>
-
       </div>
 
-      {/* ABOUT MODAL */}
-      {
-        showAboutModal && (
-          <div className="modal-overlay">
-
-            <div className="about-modal">
-
-              <button
-                className="close-btn"
-                onClick={() =>
-                  setShowAboutModal(false)
-                }
-              >
-                ✕
-              </button>
-
-              <h2>
-                About Zakat
-              </h2>
-
-              <div className="about-grid">
-
-                <div className="about-box">
-                  <h3>
-                    What Is Zakat?
-                  </h3>
-
-                  <p>
-                    Zakat is an obligatory
-                    charity for Muslims
-                    who meet the nisab
-                    threshold. It purifies
-                    wealth and helps
-                    people in need.
-                  </p>
-                </div>
-
-                <div className="about-box">
-                  <h3>
-                    What Is Business Zakat?
-                  </h3>
-
-                  <p>
-                    Business zakat is
-                    zakat imposed on
-                    profits, savings,
-                    and business assets
-                    after reaching
-                    nisab and haul.
-                  </p>
-                </div>
-
-                <div className="about-box">
-                  <h3>
-                    Why We Pay Zakat?
-                  </h3>
-
-                  <p>
-                    Zakat is paid to
-                    fulfil Islamic
-                    obligations,
-                    purify wealth,
-                    and support
-                    asnaf groups.
-                  </p>
-                </div>
-
-                <div className="about-box">
-                  <h3>
-                    Benefits of Zakat
-                  </h3>
-
-                  <p>
-                    ✔ Purifies wealth
-                    <br />
-                    ✔ Helps the poor
-                    <br />
-                    ✔ Strengthens society
-                    <br />
-                    ✔ Gains blessings
-                  </p>
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-        )
-      }
-
-      {/* ASNAF */}
-      {
-        showAsnafModal && (
-          <div className="modal-overlay">
-
-            <div className="about-modal">
-
-              <button
-                className="close-btn"
-                onClick={() =>
-                  setShowAsnafModal(false)
-                }
-              >
-                ✕
-              </button>
-
-              <h2>
-                Asnaf Zakat
-              </h2>
-
-              <div className="asnaf-container">
-
-                {/* LEFT SIDE */}
-                <div className="asnaf-sidebar">
-
-                  <button
-                    className={`asnaf-tab ${selectedAsnaf === "Fakir"
-                      ? "active"
-                      : ""
-                      }`}
-                    onClick={() =>
-                      setSelectedAsnaf(
-                        "Fakir"
-                      )
-                    }
-                  >
-                    Fakir
-                  </button>
-
-                  <button
-                    className={`asnaf-tab ${selectedAsnaf === "Miskin"
-                      ? "active"
-                      : ""
-                      }`}
-                    onClick={() =>
-                      setSelectedAsnaf(
-                        "Miskin"
-                      )
-                    }
-                  >
-                    Miskin
-                  </button>
-
-                  <button
-                    className={`asnaf-tab ${selectedAsnaf === "Amil"
-                      ? "active"
-                      : ""
-                      }`}
-                    onClick={() =>
-                      setSelectedAsnaf(
-                        "Amil"
-                      )
-                    }
-                  >
-                    Amil
-                  </button>
-
-                  <button
-                    className={`asnaf-tab ${selectedAsnaf === "Muallaf"
-                      ? "active"
-                      : ""
-                      }`}
-                    onClick={() =>
-                      setSelectedAsnaf(
-                        "Muallaf"
-                      )
-                    }
-                  >
-                    Muallaf
-                  </button>
-
-                  <button
-                    className={`asnaf-tab ${selectedAsnaf === "Riqab"
-                      ? "active"
-                      : ""
-                      }`}
-                    onClick={() =>
-                      setSelectedAsnaf(
-                        "Riqab"
-                      )
-                    }
-                  >
-                    Riqab
-                  </button>
-
-                  <button
-                    className={`asnaf-tab ${selectedAsnaf ===
-                      "Gharimin"
-                      ? "active"
-                      : ""
-                      }`}
-                    onClick={() =>
-                      setSelectedAsnaf(
-                        "Gharimin"
-                      )
-                    }
-                  >
-                    Gharimin
-                  </button>
-
-                  <button
-                    className={`asnaf-tab ${selectedAsnaf ===
-                      "Fisabilillah"
-                      ? "active"
-                      : ""
-                      }`}
-                    onClick={() =>
-                      setSelectedAsnaf(
-                        "Fisabilillah"
-                      )
-                    }
-                  >
-                    Fisabilillah
-                  </button>
-
-                  <button
-                    className={`asnaf-tab ${selectedAsnaf ===
-                      "Ibn Sabil"
-                      ? "active"
-                      : ""
-                      }`}
-                    onClick={() =>
-                      setSelectedAsnaf(
-                        "Ibn Sabil"
-                      )
-                    }
-                  >
-                    Ibn Sabil
-                  </button>
-
-                </div>
-
-                {/* RIGHT SIDE */}
-                <div className="asnaf-content">
-
-                  <h2>
-                    {selectedAsnaf}
-                  </h2>
-
-                  <p>
-                    {selectedAsnaf ===
-                      "Fakir" &&
-                      "A poor Muslim who has no income or insufficient means to meet basic daily needs."}
-
-                    {selectedAsnaf ===
-                      "Miskin" &&
-                      "A Muslim with limited income that is insufficient to support essential living expenses."}
-
-                    {selectedAsnaf ===
-                      "Amil" &&
-                      "Individuals appointed to manage and distribute zakat funds."}
-
-                    {selectedAsnaf ===
-                      "Muallaf" &&
-                      "New Muslims or individuals whose hearts are inclined towards Islam."}
-
-                    {selectedAsnaf ===
-                      "Riqab" &&
-                      "People in bondage or slavery seeking freedom."}
-
-                    {selectedAsnaf ===
-                      "Gharimin" &&
-                      "Muslims burdened with debt for basic necessities."}
-
-                    {selectedAsnaf ===
-                      "Fisabilillah" &&
-                      "People striving in the cause of Allah for community benefit."}
-
-                    {selectedAsnaf ===
-                      "Ibn Sabil" &&
-                      "Travelers stranded and needing temporary financial assistance."}
-                  </p>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        )
-      }
-
       <SidebarDrawer
-        isOpen={
-          isDrawerOpen
-        }
+        isOpen={isDrawerOpen}
         onClose={() =>
-          setIsDrawerOpen(
-            false
-          )
+          setIsDrawerOpen(false)
         }
       />
 

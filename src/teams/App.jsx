@@ -13,10 +13,12 @@ import HomePage from "./pages/HomePage";
 import ZakatCalculator from "./pages/ZakatCalculator";
 import Profile from "./pages/Profile";
 import NisabPage from "./pages/NisabPage";
+import BusinessSetup from "./pages/BusinessSetup";
 import ResultPage from "./pages/ResultPage";
 import PaymentPage from "./pages/PaymentPage";
 import TransferPage from "./pages/TransferPage";
 import Dashboard from "./pages/Dashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 import UpdateNisabRate from "./pages/UpdateNisabRate";
 
 import "./App.css";
@@ -33,90 +35,53 @@ export default function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState("user");
+  const [result, setResult] = useState(defaultResult);
 
-  const [result, setResult] =
-    useState(defaultResult);
+  const [payment, setPayment] = useState({
+    paymentId: "PAY-2026-001",
+    amount: 0,
+    gateway: "FPX / Online Banking",
+    status: "Pending",
+  });
 
-  const [payment, setPayment] =
-    useState({
-      paymentId: "PAY-2026-001",
-      amount: 0,
-      gateway: "FPX / Online Banking",
-      status: "Pending",
-    });
+  const [transfer, setTransfer] = useState({
+    transferId: "TRF-2026-001",
+    bankName: "Maybank",
+    zakatOrganization: "Kelantan Zakat Organization",
+    status: "Pending",
+  });
 
-  const [transfer, setTransfer] =
-    useState({
-      transferId: "TRF-2026-001",
-      bankName: "Maybank",
-      zakatOrganization:
-        "Kelantan Zakat Organization",
-      status: "Pending",
-    });
-
-  // ======================
-  // CHECK LOGIN SESSION
-  // ======================
   useEffect(() => {
-    const loggedIn =
-      localStorage.getItem("isLoggedIn");
-
-    const storedRole =
-      localStorage.getItem("userRole");
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    const storedRole = localStorage.getItem("userRole");
 
     if (loggedIn === "true") {
       setIsLoggedIn(true);
-      setUserRole(
-        storedRole === "admin"
-          ? "admin"
-          : "user"
-      );
+      setUserRole(storedRole === "admin" ? "admin" : "user");
     }
   }, []);
 
-  // ======================
-  // LOAD SAVED RESULT
-  // ======================
   useEffect(() => {
-    const savedResult =
-      localStorage.getItem(
-        "zakat-result"
-      );
+    const savedResult = localStorage.getItem("zakat-result");
 
     if (savedResult) {
-      const parsedResult =
-        JSON.parse(savedResult);
-
+      const parsedResult = JSON.parse(savedResult);
       setResult(parsedResult);
 
       setPayment((prev) => ({
         ...prev,
-        amount:
-          parsedResult.zakatAmount || 0,
+        amount: parsedResult.zakatAmount || 0,
       }));
     }
   }, []);
 
-  // ======================
-  // LOGIN SUCCESS
-  // ======================
-  const handleLoginSuccess = (
-    role = "user"
-  ) => {
+  const handleLoginSuccess = (role = "user") => {
     setIsLoggedIn(true);
     setUserRole(role);
 
-    localStorage.setItem(
-      "isLoggedIn",
-      "true"
-    );
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userRole", role);
 
-    localStorage.setItem(
-      "userRole",
-      role
-    );
-
-    // FIX LOGIN REDIRECT
     if (role === "admin") {
       navigate("/admin/dashboard");
     } else {
@@ -124,224 +89,87 @@ export default function App() {
     }
   };
 
-  // ======================
-  // REGISTER SUCCESS
-  // ======================
-  const handleRegisterSuccess =
-    () => {
-      navigate("/login");
-    };
-
-  // ======================
-  // LOGOUT
-  // ======================
-  const handleLogout = () => {
-    localStorage.removeItem(
-      "isLoggedIn"
-    );
-
-    localStorage.removeItem(
-      "userRole"
-    );
-
-    localStorage.removeItem(
-      "userEmail"
-    );
-
-    setIsLoggedIn(false);
-    setUserRole("user");
-
+  const handleRegisterSuccess = () => {
     navigate("/login");
   };
 
-  // ======================
-  // SAVE RESULT
-  // ======================
-  const handleSave = () => {
-    localStorage.setItem(
-      "zakat-result",
-      JSON.stringify(result)
-    );
+  const handlePaymentSuccess = () => {
+    setPayment((prev) => ({
+      ...prev,
+      status: "Success",
+    }));
 
-    alert(
-      "Calculation saved successfully!"
-    );
+    setTransfer((prev) => ({
+      ...prev,
+      status: "Success",
+    }));
+
+    navigate("/transfer");
   };
 
-  // ======================
-  // RESET
-  // ======================
-  const handleReset = () => {
-    localStorage.removeItem(
-      "zakat-result"
-    );
+  const handleCalculatorComplete = (calculatorResult) => {
+    const newResult = {
+      zakatAmount: Number(calculatorResult.zakat) || 0,
+      nisabStatus:
+        calculatorResult.total >= calculatorResult.nisab
+          ? "Eligible"
+          : "Not Eligible",
+      method:
+        calculatorResult.businessMethod === "UntungRugi"
+          ? "Profit & Loss"
+          : "Working Capital",
+    };
 
-    setResult(defaultResult);
+    setResult(newResult);
 
-    setPayment({
-      paymentId: "PAY-2026-001",
-      amount: 0,
-      gateway:
-        "FPX / Online Banking",
-      status: "Pending",
-    });
+    setPayment((prev) => ({
+      ...prev,
+      amount: Number(calculatorResult.zakat) || 0,
+    }));
 
-    setTransfer({
-      transferId: "TRF-2026-001",
-      bankName: "Maybank",
-      zakatOrganization:
-        "Kelantan Zakat Organization",
-      status: "Pending",
-    });
-
-    alert("Calculation reset.");
+    localStorage.setItem("zakat-result", JSON.stringify(newResult));
+    navigate("/payment");
   };
-
-  // ======================
-  // PROCEED PAYMENT
-  // ======================
-  const handleProceedToPayment =
-    () => {
-      if (
-        !result ||
-        Number(result.zakatAmount) <=
-        0
-      ) {
-        alert(
-          "Please calculate zakat first."
-        );
-        return;
-      }
-
-      navigate("/payment");
-    };
-
-  // ======================
-  // PAYMENT SUCCESS
-  // ======================
-  const handlePaymentSuccess =
-    () => {
-      setPayment((prev) => ({
-        ...prev,
-        status: "Success",
-      }));
-
-      setTransfer((prev) => ({
-        ...prev,
-        status: "Success",
-      }));
-
-      navigate("/transfer");
-    };
-
-  // ======================
-  // CALCULATOR COMPLETE
-  // ======================
-  const handleCalculatorComplete =
-    (calculatorResult) => {
-      const newResult = {
-        zakatAmount:
-          Number(
-            calculatorResult.zakat
-          ) || 0,
-
-        nisabStatus:
-          calculatorResult.total >=
-            calculatorResult.nisab
-            ? "Eligible"
-            : "Not Eligible",
-
-        method:
-          calculatorResult.businessMethod ===
-            "UntungRugi"
-            ? "Profit & Loss"
-            : "Working Capital",
-      };
-
-      setResult(newResult);
-
-      // auto update payment amount
-      setPayment((prev) => ({
-        ...prev,
-        amount:
-          Number(
-            calculatorResult.zakat
-          ) || 0,
-      }));
-
-      localStorage.setItem(
-        "zakat-result",
-        JSON.stringify(newResult)
-      );
-
-      // terus pergi payment
-      navigate("/payment");
-    };
 
   return (
     <LanguageProvider>
       <Routes>
-        {/* LOGIN */}
         <Route
           path="/login"
-          element={
-            <Login
-              onLoginSuccess={
-                handleLoginSuccess
-              }
-            />
-          }
+          element={<Login onLoginSuccess={handleLoginSuccess} />}
         />
 
-        {/* REGISTER */}
         <Route
           path="/register"
-          element={
-            <Register
-              onRegisterSuccess={
-                handleRegisterSuccess
-              }
-            />
-          }
+          element={<Register onRegisterSuccess={handleRegisterSuccess} />}
         />
 
-        {/* ROOT */}
         <Route
           path="/"
           element={
             isLoggedIn ? (
               userRole === "admin" ? (
-                <Navigate
-                  to="/admin/dashboard"
-                  replace
-                />
+                <Navigate to="/admin/dashboard" replace />
               ) : (
-                <Navigate
-                  to="/dashboard"
-                  replace
-                />
+                <Navigate to="/dashboard" replace />
               )
             ) : (
-              <Navigate
-                to="/login"
-                replace
-              />
+              <Navigate to="/login" replace />
             )
           }
         />
 
-        {/* USER */}
         <Route
           path="/dashboard"
           element={
-            isLoggedIn ? (
-              <HomePage />
-            ) : (
-              <Navigate
-                to="/login"
-                replace
-              />
-            )
+            isLoggedIn ? <HomePage /> : <Navigate to="/login" replace />
+          }
+        />
+
+        <Route
+          path="/home"
+          element={
+            isLoggedIn ? <HomePage /> : <Navigate to="/login" replace />
           }
         />
 
@@ -349,16 +177,20 @@ export default function App() {
           path="/calculator"
           element={
             isLoggedIn ? (
-              <ZakatCalculator
-                onComplete={
-                  handleCalculatorComplete
-                }
-              />
+              <ZakatCalculator onComplete={handleCalculatorComplete} />
             ) : (
-              <Navigate
-                to="/login"
-                replace
-              />
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/calculate-zakat"
+          element={
+            isLoggedIn ? (
+              <ZakatCalculator onComplete={handleCalculatorComplete} />
+            ) : (
+              <Navigate to="/login" replace />
             )
           }
         />
@@ -366,28 +198,28 @@ export default function App() {
         <Route
           path="/profile"
           element={
-            isLoggedIn ? (
-              <Profile />
-            ) : (
-              <Navigate
-                to="/login"
-                replace
-              />
-            )
+            isLoggedIn ? <Profile /> : <Navigate to="/login" replace />
           }
         />
 
         <Route
           path="/nisab"
           element={
-            isLoggedIn ? (
-              <NisabPage />
-            ) : (
-              <Navigate
-                to="/login"
-                replace
-              />
-            )
+            isLoggedIn ? <NisabPage /> : <Navigate to="/login" replace />
+          }
+        />
+
+        <Route
+          path="/nisab-rate"
+          element={
+            isLoggedIn ? <NisabPage /> : <Navigate to="/login" replace />
+          }
+        />
+
+        <Route
+          path="/business-setup"
+          element={
+            isLoggedIn ? <BusinessSetup /> : <Navigate to="/login" replace />
           }
         />
 
@@ -397,18 +229,26 @@ export default function App() {
             isLoggedIn ? (
               <PaymentPage
                 payment={payment}
-                onPay={
-                  handlePaymentSuccess
-                }
-                onBack={() =>
-                  navigate("/result")
-                }
+                onPay={handlePaymentSuccess}
+                onBack={() => navigate("/dashboard")}
               />
             ) : (
-              <Navigate
-                to="/login"
-                replace
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/pay-zakat"
+          element={
+            isLoggedIn ? (
+              <PaymentPage
+                payment={payment}
+                onPay={handlePaymentSuccess}
+                onBack={() => navigate("/dashboard")}
               />
+            ) : (
+              <Navigate to="/login" replace />
             )
           }
         />
@@ -417,34 +257,64 @@ export default function App() {
           path="/transfer"
           element={
             isLoggedIn ? (
-              <TransferPage
-                transfer={transfer}
-              />
+              <TransferPage transfer={transfer} />
             ) : (
-              <Navigate
-                to="/login"
-                replace
-              />
+              <Navigate to="/login" replace />
             )
           }
         />
 
-        {/* ADMIN */}
+        <Route
+          path="/result"
+          element={
+            isLoggedIn ? (
+              <ResultPage
+                result={result}
+                onSave={() => {
+                  localStorage.setItem(
+                    "zakat-result",
+                    JSON.stringify(result)
+                  );
+                  alert("Calculation saved successfully!");
+                }}
+                onReset={() => {
+                  localStorage.removeItem("zakat-result");
+                  setResult(defaultResult);
+                  setPayment({
+                    paymentId: "PAY-2026-001",
+                    amount: 0,
+                    gateway: "FPX / Online Banking",
+                    status: "Pending",
+                  });
+                  setTransfer({
+                    transferId: "TRF-2026-001",
+                    bankName: "Maybank",
+                    zakatOrganization: "Kelantan Zakat Organization",
+                    status: "Pending",
+                  });
+                  alert("Calculation reset.");
+                }}
+                onProceedToPayment={() => {
+                  if (!result || Number(result.zakatAmount) <= 0) {
+                    alert("Please calculate zakat first.");
+                    return;
+                  }
+                  navigate("/payment");
+                }}
+              />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
         <Route
           path="/admin/dashboard"
           element={
-            isLoggedIn &&
-              userRole === "admin" ? (
-              <Dashboard
-                onLogout={
-                  handleLogout
-                }
-              />
+            isLoggedIn && userRole === "admin" ? (
+              <AdminDashboard />
             ) : (
-              <Navigate
-                to="/login"
-                replace
-              />
+              <Navigate to="/login" replace />
             )
           }
         />
@@ -452,28 +322,26 @@ export default function App() {
         <Route
           path="/admin/nisab"
           element={
-            isLoggedIn &&
-              userRole === "admin" ? (
+            isLoggedIn && userRole === "admin" ? (
               <UpdateNisabRate />
             ) : (
-              <Navigate
-                to="/login"
-                replace
-              />
+              <Navigate to="/login" replace />
             )
           }
         />
 
-        {/* FALLBACK */}
         <Route
-          path="*"
+          path="/update-nisab"
           element={
-            <Navigate
-              to="/"
-              replace
-            />
+            isLoggedIn && userRole === "admin" ? (
+              <UpdateNisabRate />
+            ) : (
+              <Navigate to="/login" replace />
+            )
           }
         />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </LanguageProvider>
   );

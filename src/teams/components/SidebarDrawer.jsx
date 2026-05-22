@@ -68,6 +68,13 @@ const SidebarDrawer = ({ isOpen, onClose }) => {
 
 const menuItems = [
   {
+    id: "business-setup",
+    label: t.businessSetup || "Business Setup",
+    icon: "🏢",
+    path: "/business-setup",
+  },
+
+  {
     id: "profile",
     label: t.profile,
     icon: "👤",

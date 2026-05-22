@@ -1567,3 +1567,199 @@
   line-height: 1.9;
   color: #5c4d38;
 }
+.home-page,
+.premium-navbar,
+.navbar-container {
+  overflow: visible !important;
+}
+
+.premium-navbar {
+  z-index: 1000 !important;
+}
+
+.user-navbar-right {
+  position: relative !important;
+  z-index: 999999 !important;
+}
+
+.user-hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: linear-gradient(145deg, #fff8ea, #f3e5c4);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  border-radius: 16px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 52px;
+  height: 52px;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-hamburger:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 18px rgba(139, 101, 38, 0.12);
+}
+
+.user-hamburger .hamburger-line {
+  width: 20px;
+  height: 2.5px;
+  background: #8b6526;
+  border-radius: 2px;
+}
+
+.user-menu-dropdown {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+  min-width: 220px;
+  overflow: hidden;
+  animation: userSlideDown 0.3s ease;
+  z-index: 999999;
+}
+
+.user-menu-item {
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  color: #3b2a0a;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-menu-item:hover {
+  background: #f8f3ea;
+  padding-left: 24px;
+}
+
+.user-menu-item.active {
+  background: #f0e0c0;
+  color: #d4a017;
+  font-weight: 700;
+}
+
+.user-menu-item.logout {
+  color: #d32f2f;
+}
+
+.user-menu-item.logout:hover {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.user-menu-divider {
+  border: none;
+  border-top: 1px solid #eadfca;
+  margin: 8px 0;
+}
+
+@keyframes userSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.nisab-malaysia-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.nisab-select-wrapper {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nisab-select-wrapper label {
+  font-weight: 700;
+  color: #8b6526;
+  font-size: 14px;
+}
+
+.nisab-state-select {
+  width: 280px;
+  max-width: 100%;
+  padding: 15px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(212, 160, 23, 0.45);
+  background: #fffaf0;
+  color: #3b2a0a;
+  font-weight: 700;
+  font-size: 15px;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(139, 101, 38, 0.08);
+}
+
+.nisab-state-select:focus {
+  border-color: #d4a017;
+  box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.18);
+}
+
+.nisab-selected-box {
+  background: #fffaf0;
+  border-radius: 26px;
+  padding: 30px;
+  min-width: 330px;
+  border: 1px solid rgba(212, 160, 23, 0.2);
+  box-shadow: 0 14px 35px rgba(139, 101, 38, 0.1);
+}
+
+.nisab-selected-box h4 {
+  margin: 0 0 8px;
+  color: #8b6526;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.nisab-selected-box h3 {
+  margin: 0 0 22px;
+  font-size: 26px;
+  color: #3b2a0a;
+}
+
+.nisab-selected-box h2 {
+  margin: 0 0 12px;
+  color: #8b6526;
+  font-size: 42px;
+  font-family: "Playfair Display", serif;
+}
+
+.nisab-selected-box p {
+  margin: 0;
+  color: #6b5b3d;
+  font-size: 15px;
+}
+
+@media (max-width: 900px) {
+  .nisab-malaysia-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nisab-selected-box {
+    width: 100%;
+    min-width: auto;
+  }
+}

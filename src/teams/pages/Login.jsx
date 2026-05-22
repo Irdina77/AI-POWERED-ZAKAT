@@ -46,6 +46,37 @@ function Login({ onLoginSuccess }) {
         cleanEmail
       );
 
+      // Test/Admin user fallback
+      if (cleanEmail === "admin@gmail.com" && cleanPassword === "123456") {
+        const testUser = {
+          email: "admin@gmail.com"
+        };
+
+        console.log(
+          "Test admin login success:",
+          testUser
+        );
+
+        localStorage.setItem(
+          "userEmail",
+          testUser.email
+        );
+
+        const role = "admin";
+
+        setMessage(
+          `✅ ${t.loginSuccessful}`
+        );
+
+        onLoginSuccess(role);
+
+        setTimeout(() => {
+          navigate("/admin/dashboard");
+        }, 1000);
+
+        return;
+      }
+
       // Firebase login
       const userCredential =
         await signInWithEmailAndPassword(

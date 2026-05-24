@@ -9,18 +9,28 @@
   color: #3b2a0a;
 }
 
-/* Header - Matches Calculator Page Branding */
+/* Header - Premium navbar style (match homepage) */
 .nisab-topbar {
   width: 100%;
+  padding: 14px 24px;
+  margin: 0 0 24px 0;
+
+  background: linear-gradient(135deg, #f7e8bf 0%, #f3ddb0 50%, #c89b3c 100%);
+
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(200, 155, 60, 0.45);
+  border-radius: 26px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f8f5ee;
-  border: 1px solid #eadfca;
-  border-radius: 18px;
-  padding: 22px 28px;
-  margin-bottom: 32px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+
+  box-shadow: 0 14px 34px rgba(139, 101, 38, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  position: sticky;
+  top: 16px;
+  z-index: 999;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .nisab-brand {
@@ -47,11 +57,12 @@
   font-size: 32px;
   font-weight: 700;
   margin: 0;
-  color: #f7e8bf;
-  -webkit-text-stroke: 0.5px #8b6526;
-  text-shadow:
-    0 2px 2px rgba(0, 0, 0, 0.25),
-    0 6px 10px rgba(0, 0, 0, 0.25);
+
+  background: linear-gradient(180deg, #6b4a12 0%, #4a3512 55%, #2f210c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.4px;
 }
 
 .nisab-divider {
@@ -85,36 +96,46 @@
 }
 
 .nisab-menu-button {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  width: 44px;
-  height: 44px;
-  background: linear-gradient(135deg, #d4a017, #f0c35c);
-  border: none;
-  border-radius: 12px;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(145deg, #fff8ea, #f3e5c4);
+  border: 1px solid rgba(212, 175, 55, 0.16);
+  border-radius: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(212, 160, 23, 0.3);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  box-shadow: 0 12px 28px rgba(139, 101, 38, 0.12);
 }
 
 .nisab-menu-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(212, 160, 23, 0.4);
+  transform: translateY(-2px) scale(1.03);
+  background: linear-gradient(145deg, #fffdf7, #ecd8aa);
+  box-shadow: 0 16px 32px rgba(139, 101, 38, 0.16);
 }
 
 .nisab-menu-button:active {
   transform: scale(0.95);
 }
 
-.hamburger-line {
-  width: 20px;
-  height: 2px;
-  background: white;
-  margin: 2px 0;
-  border-radius: 1px;
-  transition: all 0.3s ease;
+.nisab-menu-button .hamburger-line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 4px;
+  background: #8b6526;
+  border-radius: 999px;
+}
+
+.nisab-menu-button .hamburger-line:nth-child(1) {
+  top: 16px;
+}
+
+.nisab-menu-button .hamburger-line:nth-child(2) {
+  bottom: 16px;
 }
 
 .nisab-user-chip {
@@ -147,6 +168,70 @@
   padding: 32px;
   margin-bottom: 32px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.nisab-top-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  width: 100%;
+  min-height: 180px;
+  padding: 32px;
+  margin-bottom: 32px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, #f7e8bf 0%, #f3ddb0 50%, #c89b3c 100%);
+  border: 1px solid rgba(200, 155, 60, 0.35);
+  box-shadow: 0 14px 34px rgba(139, 101, 38, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.32s ease, box-shadow 0.32s ease, background 0.32s ease;
+}
+
+.nisab-top-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 44px rgba(139, 101, 38, 0.24);
+}
+
+.nisab-top-box h2,
+.nisab-top-box h3,
+.nisab-top-box .nisab-top-box-title {
+  margin: 0;
+  color: #3f2d13;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.28);
+}
+
+.nisab-top-box h2 {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.nisab-top-box .nisab-top-box-value,
+.nisab-top-box strong {
+  font-size: 42px;
+  font-weight: 900;
+  color: #4c3719;
+  display: block;
+  margin-top: 8px;
+}
+
+.nisab-top-box p,
+.nisab-top-box .nisab-top-box-subtitle {
+  margin: 10px 0 0;
+  color: #4e391d;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.nisab-top-box .nisab-top-box-icon,
+.nisab-top-box .icon {
+  font-size: 56px;
+  color: #9a6d13;
+  flex-shrink: 0;
+}
+
+.nisab-top-box .nisab-top-box-content {
+  flex: 1;
 }
 
 .nisab-header-icon {
@@ -498,3 +583,4 @@
     padding: 16px;
   }
 }
+

@@ -132,7 +132,6 @@ export default function HomePage() {
               >
                 <span className="hamburger-line"></span>
                 <span className="hamburger-line"></span>
-                <span className="hamburger-line"></span>
               </button>
 
               {showLogoMenu && (

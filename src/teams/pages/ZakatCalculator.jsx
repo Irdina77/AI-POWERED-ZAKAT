@@ -702,8 +702,6 @@ function ZakatCalculator({ onComplete }) {
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
       />
-
-      <Chatbot />
     </>
   );
 }

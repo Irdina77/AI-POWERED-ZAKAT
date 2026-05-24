@@ -98,11 +98,7 @@ export default function NisabPage() {
             >
               <span className="hamburger-line"></span>
               <span className="hamburger-line"></span>
-              <span className="hamburger-line"></span>
             </button>
-            <div className="nisab-user-chip">
-              👤 User
-            </div>
           </div>
         </header>
 

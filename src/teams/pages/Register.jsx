@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useLanguage } from "../context/LanguageContext";
 import { getTranslationSection } from "../translations/translations";
+import { getUserState, setUserState } from "../utils/userStateStorage";
 import "../Styles/Register.css";
 import zakatIcon from "../assets/zakat-icon.webp";
 
@@ -33,9 +34,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedState, setSelectedState] = useState(() => {
-    const savedState =
-      localStorage.getItem("selectedState") ||
-      localStorage.getItem("selectedZakatState");
+    const savedState = getUserState();
     return malaysiaStates.includes(savedState) ? savedState : defaultState;
   });
   const [businessType, setBusinessType] = useState(
@@ -84,7 +83,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
   const handleStateChange = (newState) => {
     if (malaysiaStates.includes(newState)) {
       setSelectedState(newState);
-      localStorage.setItem("selectedState", newState);
+      setUserState(newState);
     }
   };
 
@@ -127,10 +126,7 @@ localStorage.setItem(
   cleanEmail
 );
 
-localStorage.setItem(
-  "selectedState",
-  selectedState
-);
+setUserState(selectedState);
 
 localStorage.setItem(
   "businessType",

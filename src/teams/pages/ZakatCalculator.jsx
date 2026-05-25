@@ -2,11 +2,30 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { getTranslationSection } from "../translations/translations";
+import { getUserState, setUserState } from "../utils/userStateStorage";
 import "../Styles/HomePage.css";
 import "../Styles/ZakatCalculator.css";
 import zakatIcon from "../../teams/assets/zakat-icon.webp";
 import Chatbot from "../components/Chatbot";
 import SidebarDrawer from "../components/SidebarDrawer";
+
+const DEFAULT_STATE = "Selangor";
+const VALID_STATES = [
+  "Johor",
+  "Kedah",
+  "Kelantan",
+  "Melaka",
+  "Negeri Sembilan",
+  "Pahang",
+  "Penang",
+  "Perak",
+  "Perlis",
+  "Sabah",
+  "Sarawak",
+  "Selangor",
+  "Terengganu",
+  "Wilayah Persekutuan",
+];
 
 function ZakatCalculator({ onComplete }) {
   const navigate = useNavigate();
@@ -14,11 +33,8 @@ function ZakatCalculator({ onComplete }) {
   const t = getTranslationSection(language, 'calculator');
   const [selectedYear, setSelectedYear] = useState("2026");
   const [selectedState, setSelectedState] = useState(() => {
-    return (
-      localStorage.getItem("selectedState") ||
-      localStorage.getItem("selectedZakatState") ||
-      "Selangor"
-    );
+    const savedState = getUserState();
+    return VALID_STATES.includes(savedState) ? savedState : DEFAULT_STATE;
   });
   const [businessMethod, setBusinessMethod] = useState("UntungRugi");
   const [displayName, setDisplayName] = useState(
@@ -33,7 +49,7 @@ function ZakatCalculator({ onComplete }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("selectedState", selectedState);
+    setUserState(selectedState);
   }, [selectedState]);
 
   const yearRates = {
@@ -42,9 +58,9 @@ function ZakatCalculator({ onComplete }) {
       Kedah: 24563.45,
       Kelantan: 23831.0,
       Melaka: 24198.4,
-      NegeriSembilan: 22669.53,
+      "Negeri Sembilan": 22669.53,
       Pahang: 25995.67,
-      "Pulau Pinang": 24200.0,
+      Penang: 24200.0,
       Perak: 25889.34,
       Perlis: 25995.67,
       Sabah: 23500.0,
@@ -58,9 +74,9 @@ function ZakatCalculator({ onComplete }) {
       Kedah: 38619.0,
       Kelantan: 29376.0,
       Melaka: 29741.0,
-      NegeriSembilan: 29741.0,
+      "Negeri Sembilan": 29741.0,
       Pahang: 29741.0,
-      "Pulau Pinang": 31000.0,
+      Penang: 31000.0,
       Perak: 32133.89,
       Perlis: 38871.0,
       Sabah: 29000.0,
@@ -74,9 +90,9 @@ function ZakatCalculator({ onComplete }) {
       Kedah: 32871.27,
       Kelantan: 37401.0,
       Melaka: 40092.42,
-      NegeriSembilan: 33880.0,
+      "Negeri Sembilan": 33880.0,
       Pahang: 40092.42,
-      "Pulau Pinang": 33890.0,
+      Penang: 33890.0,
       Perak: 53618.0,
       Perlis: 38871.0,
       Sabah: 36979.0,
@@ -87,7 +103,10 @@ function ZakatCalculator({ onComplete }) {
     },
   };
 
-  const nisab = yearRates[selectedYear][selectedState];
+  const effectiveState = yearRates[selectedYear][selectedState]
+    ? selectedState
+    : DEFAULT_STATE;
+  const nisab = yearRates[selectedYear][effectiveState];
   const businessProfit = Number(businessRevenue) - Number(businessExpenses);
   const workingCapital = Number(currentAssets) - Number(currentLiabilities);
 
@@ -426,7 +445,8 @@ function ZakatCalculator({ onComplete }) {
                     <select
                       value={selectedState}
                       onChange={(e) => {
-                        setSelectedState(e.target.value);
+                        const newState = e.target.value;
+                        setSelectedState(newState);
                         setHasCalculated(false);
                         setShowSummary(false);
                       }}

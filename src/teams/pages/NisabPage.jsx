@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CalendarDays, DollarSign, Target, TrendingUp } from 'lucide-react';
 import SidebarDrawer from '../components/SidebarDrawer';
+import { getUserState, setUserState } from '../utils/userStateStorage';
 import '../Styles/NisabPage.css';
 import zakatIcon from '../../teams/assets/zakat-icon.webp';
 
@@ -46,17 +47,11 @@ const zakatRate = 2.5;
 
 export default function NisabPage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedState, setSelectedState] = useState('Selangor');
+  const [selectedState, setSelectedState] = useState(() => {
+    const savedState = getUserState();
+    return stateOptions.includes(savedState) ? savedState : 'Selangor';
+  });
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Load from localStorage if user previously selected state
-    const savedState =
-      localStorage.getItem('selectedState') ||
-      localStorage.getItem('selectedZakatState') ||
-      'Selangor';
-    setSelectedState(savedState);
-  }, []);
 
   // Get current state data
   const currentStateData = nisabDataByState[selectedState] || nisabDataByState['Selangor'];
@@ -67,7 +62,7 @@ export default function NisabPage() {
   const handleStateChange = (e) => {
     const newState = e.target.value;
     setSelectedState(newState);
-    localStorage.setItem('selectedState', newState);
+    setUserState(newState);
   };
 
   return (

@@ -4,6 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 import { useLanguage } from "../context/LanguageContext";
 import { Calculator, HandCoins, ReceiptText } from "lucide-react";
+import { getUserState, setUserState } from "../utils/userStateStorage";
 
 import SidebarDrawer from "../components/SidebarDrawer";
 import "../Styles/HomePage.css";
@@ -36,7 +37,7 @@ export default function HomePage() {
   const [showAsnafModal, setShowAsnafModal] = useState(false);
   const [selectedAsnaf, setSelectedAsnaf] = useState("Fakir");
   const [showNisabModal, setShowNisabModal] = useState(false);
-  const [selectedState, setSelectedState] = useState("Selangor");
+  const [selectedState, setSelectedState] = useState(() => getUserState());
   const [userName, setUserName] = useState("Valued User");
 
   const menuRef = useRef(null);
@@ -64,18 +65,9 @@ export default function HomePage() {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    const savedState =
-      localStorage.getItem("selectedState") ||
-      localStorage.getItem("selectedZakatState");
-
-    if (savedState) {
-      setSelectedState(savedState);
-    }
-  }, []);
 
   useEffect(() => {
-    localStorage.setItem("selectedState", selectedState);
+    setUserState(selectedState);
     localStorage.setItem("selectedNisabValue", selectedNisab.value);
   }, [selectedState, selectedNisab.value]);
 
@@ -286,7 +278,11 @@ export default function HomePage() {
           <select
             className="nisab-state-select"
             value={selectedState}
-            onChange={(e) => setSelectedState(e.target.value)}
+            onChange={(e) => {
+              const newState = e.target.value;
+              setSelectedState(newState);
+              setUserState(newState);
+            }}
           >
             {nisabStates2026.map((item) => (
               <option key={item.state} value={item.state}>

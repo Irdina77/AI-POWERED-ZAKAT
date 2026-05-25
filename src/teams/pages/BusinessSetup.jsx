@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { getTranslationSection } from "../translations/translations";
+import { getUserState, setUserState } from "../utils/userStateStorage";
 import "../Styles/BusinessSetup.css";
 import zakatIcon from "../assets/zakat-icon.webp";
 
@@ -26,10 +27,7 @@ export default function BusinessSetup() {
   ];
 
   const getPersistedState = () => {
-    const savedState =
-      localStorage.getItem("selectedState") ||
-      localStorage.getItem("selectedZakatState");
-
+    const savedState = getUserState();
     return states.includes(savedState) ? savedState : "Selangor";
   };
 
@@ -75,7 +73,7 @@ export default function BusinessSetup() {
     }));
 
     if (name === "state") {
-      localStorage.setItem("selectedState", value);
+      setUserState(value);
     }
 
     if (name === "businessType") {
@@ -178,10 +176,7 @@ export default function BusinessSetup() {
     // =========================
     // SAVE GLOBAL STATE
     // =========================
-    localStorage.setItem(
-      "selectedState",
-      formData.state
-    );
+    setUserState(formData.state);
 
     localStorage.setItem(
       "businessType",

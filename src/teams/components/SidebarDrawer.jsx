@@ -7,7 +7,7 @@ import './SidebarDrawer.css';
 
 const SidebarDrawer = ({ isOpen, onClose, side = 'left' }) => {
   const navigate = useNavigate();
-  const { language, updateLanguage } = useLanguage();
+  const { language } = useLanguage();
   const t = getTranslationSection(language, 'sidebar');
   const tSettings = getTranslationSection(language, 'settingsModal');
   const tProfile = getTranslationSection(language, 'profileModal');
@@ -23,7 +23,6 @@ const SidebarDrawer = ({ isOpen, onClose, side = 'left' }) => {
   // Settings states
   const [darkMode, setDarkMode] = useState(false);
   const [notifications, setNotifications] = useState(true);
-  const [localLanguage, setLocalLanguage] = useState(language);
 
   // User data
   const [userEmail, setUserEmail] = useState('');
@@ -57,7 +56,7 @@ const SidebarDrawer = ({ isOpen, onClose, side = 'left' }) => {
     const savedSettings = JSON.parse(localStorage.getItem('userSettings') || '{}');
     setDarkMode(savedSettings.darkMode || false);
     setNotifications(savedSettings.notifications !== false);
-    setLocalLanguage(language);
+    // language selection removed per UI requirements
 
     // Load nisab data (if available from UpdateNisabRate)
     const savedNisab = JSON.parse(localStorage.getItem('nisabData') || '{}');
@@ -66,14 +65,14 @@ const SidebarDrawer = ({ isOpen, onClose, side = 'left' }) => {
     }
   }, [language]);
 
-const menuItems = [
-  { id: 'home', label: t.homePage || 'Home Page', icon: '🏠', path: '/dashboard' },
-  { id: 'calculator', label: t.calculateZakat || 'Calculate Zakat', icon: '🧮', path: '/calculator' },
-  { id: 'business-setup', label: t.businessSetup || 'Business Setup', icon: '🏢', path: '/business-setup' },
-  { id: 'nisab-rate', label: t.nisabRate || 'Nisab Rate', icon: '📊', action: 'nisab' },
-  { id: 'profile', label: t.profile || 'Profile', icon: '👤', path: '/profile' },
-  { id: 'pay-zakat', label: t.payZakat || 'Pay Zakat', icon: '💳', path: '/pay-zakat' },
-  { id: 'logout', label: t.logOut || 'Log Out', icon: '🚪', action: 'logout' },
+  const menuItems = [
+  { id: 'home', label: t.homePage || 'Home Page', path: '/dashboard' },
+  { id: 'calculator', label: t.calculateZakat || 'Calculate Zakat', path: '/calculator' },
+  { id: 'business-setup', label: t.businessSetup || 'Business Setup', path: '/business-setup' },
+  { id: 'nisab-rate', label: t.nisabRate || 'Nisab Rate', action: 'nisab' },
+  { id: 'profile', label: t.profile || 'Profile', path: '/profile' },
+  { id: 'pay-zakat', label: t.payZakat || 'Pay Zakat', path: '/pay-zakat' },
+  { id: 'logout', label: t.logOut || 'Log Out', action: 'logout' },
 ];
 
   const handleMenuClick = (item) => {
@@ -92,9 +91,8 @@ const menuItems = [
   };
 
   const handleSettingsSave = () => {
-    const settings = { darkMode, notifications, language: localLanguage };
+    const settings = { darkMode, notifications };
     localStorage.setItem('userSettings', JSON.stringify(settings));
-    updateLanguage(localLanguage);
     setShowSettings(false);
     // Apply dark mode if needed
     document.body.classList.toggle('dark-mode', darkMode);
@@ -217,7 +215,6 @@ const menuItems = [
                   className="sidebar-menu-item"
                   onClick={() => handleMenuClick(item)}
                 >
-                  <span className="sidebar-menu-icon">{item.icon}</span>
                   <span className="sidebar-menu-label">{item.label}</span>
                 </motion.div>
               ))}
@@ -324,17 +321,7 @@ const menuItems = [
                       <span className="toggle-slider"></span>
                     </label>
                   </div>
-                  <div className="setting-item">
-                    <label>{tSettings.language}</label>
-                    <select
-                      value={localLanguage}
-                      onChange={(e) => setLocalLanguage(e.target.value)}
-                      className="language-select"
-                    >
-                      <option value="English">English</option>
-                      <option value="Bahasa Melayu">Bahasa Melayu</option>
-                    </select>
-                  </div>
+                  {/* language selection removed per UI requirements */}
                 </div>
                 <div className="modal-actions">
                   <button className="btn-secondary" onClick={() => setShowSettings(false)}>{tSettings.cancel}</button>

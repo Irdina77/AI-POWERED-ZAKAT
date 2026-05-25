@@ -10,21 +10,24 @@ export default function BusinessSetup() {
   const { language } = useLanguage();
   const t = getTranslationSection(language, "businessSetup");
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(() => ({
     businessName: "",
-    businessType: "retail",
+    businessType: localStorage.getItem("businessType") || "retail",
     registrationNumber: "",
     ownerName: "",
     email: "",
     phone: "",
     address: "",
     city: "",
-    state: "Kelantan",
+    state:
+      localStorage.getItem("selectedState") ||
+      localStorage.getItem("selectedZakatState") ||
+      "Kelantan",
     postalCode: "",
     annualRevenue: "",
     businessStartDate: "",
     zakatMethod: "profit-loss",
-  });
+  }));
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -40,8 +43,18 @@ export default function BusinessSetup() {
   ];
 
   const states = [
-    "Johor", "Kedah", "Kelantan", "Malacca", "Negeri Sembilan",
-    "Pahang", "Penang", "Perak", "Selangor", "Terengganu", "Sabah", "Sarawak"
+    "Johor",
+    "Kedah",
+    "Kelantan",
+    "Melaka",
+    "Negeri Sembilan",
+    "Pahang",
+    "Penang",
+    "Perak",
+    "Selangor",
+    "Terengganu",
+    "Sabah",
+    "Sarawak",
   ];
 
   const zakatMethods = [
@@ -55,6 +68,15 @@ export default function BusinessSetup() {
       ...prev,
       [name]: value,
     }));
+
+    if (name === "state") {
+      localStorage.setItem("selectedState", value);
+    }
+
+    if (name === "businessType") {
+      localStorage.setItem("businessType", value);
+    }
+
     // Clear error for this field
     if (errors[name]) {
       setErrors((prev) => ({
@@ -120,7 +142,7 @@ export default function BusinessSetup() {
       Johor: 50689.3,
       Kedah: 32871.27,
       Kelantan: 32871.27,
-      Malacca: 32871.27,
+      Melaka: 32871.27,
       "Negeri Sembilan": 32871.27,
       Pahang: 32871.27,
       Penang: 32871.27,
@@ -149,8 +171,13 @@ export default function BusinessSetup() {
     // SAVE GLOBAL STATE
     // =========================
     localStorage.setItem(
-      "selectedZakatState",
+      "selectedState",
       formData.state
+    );
+
+    localStorage.setItem(
+      "businessType",
+      formData.businessType
     );
 
     // =========================

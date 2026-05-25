@@ -300,8 +300,8 @@
   margin: 0 auto;
   padding: 12px 14px;
   border-radius: 10px;
-  border: 1px solid #e8dcc6;
-  background: #faf9f6;
+  border: 1px solid rgba(212,175,55,0.12);
+  background: linear-gradient(180deg, #fff8e8, #f6e7c2);
   font-size: 15px;
   transition: all 0.3s ease;
   color: #3b2a0a;
@@ -311,13 +311,13 @@
 
 .nisab-select:hover {
   border-color: #d4a017;
-  background: white;
+  background: linear-gradient(180deg, #fffdf6, #fff6de);
 }
 
 .nisab-select:focus {
   outline: none;
   border-color: #d4a017;
-  background: white;
+  background: linear-gradient(180deg, #fffdf6, #fff6de);
   box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.1);
 }
 

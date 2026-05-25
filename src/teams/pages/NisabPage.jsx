@@ -51,7 +51,10 @@ export default function NisabPage() {
 
   useEffect(() => {
     // Load from localStorage if user previously selected state
-    const savedState = localStorage.getItem('selectedState') || 'Selangor';
+    const savedState =
+      localStorage.getItem('selectedState') ||
+      localStorage.getItem('selectedZakatState') ||
+      'Selangor';
     setSelectedState(savedState);
   }, []);
 
@@ -77,11 +80,6 @@ export default function NisabPage() {
               className="navbar-logo-button"
               onClick={() => navigate('/dashboard')}
             >
-              <img
-                src={zakatIcon}
-                alt="logo"
-                className="navbar-logo"
-              />
               <div>
                 <span className="navbar-brand-name">ZakatNow</span>
                 <p className="navbar-subtitle">Smart AI-Powered Zakat</p>

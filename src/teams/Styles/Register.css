@@ -9,7 +9,7 @@
   position: relative;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
-  background: #1a1a1a; 
+  background: linear-gradient(180deg, #fff9ec 0%, #f6e8bf 100%);
 }
 
 .glass-page-container::before {
@@ -24,17 +24,17 @@
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.1); 
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(180deg, rgba(255,250,236,0.9), rgba(249,239,210,0.9));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212,175,55,0.12);
   border-radius: 28px;
   padding: 45px;
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  max-width: 440px;
+  box-shadow: 0 18px 40px rgba(139, 101, 38, 0.06);
   z-index: 1;
-  animation: fadeIn 0.8s ease-in-out;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -79,12 +79,12 @@
 
 .floating-group input {
   width: 100%;
-  padding: 24px 16px 10px 16px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 18px 14px 10px 14px;
+  background: linear-gradient(180deg, #fffdf6, #fbf3db);
+  border: 1px solid rgba(212,175,55,0.12);
   border-radius: 12px;
-  color: #ffffff; 
-  font-size: 16px;
+  color: #4a3512;
+  font-size: 15px;
   outline: none;
   box-sizing: border-box;
   transition: all 0.3s ease;
@@ -109,10 +109,40 @@
   text-transform: uppercase;
 }
 
-.floating-group input:focus {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: #f7e8bf;
-  box-shadow: 0 0 15px rgba(247, 232, 191, 0.2);
+.floating-group input:focus,
+.floating-group select:focus {
+  background: linear-gradient(180deg, #fffdf6, #fff6de);
+  border-color: #d4a017;
+  box-shadow: 0 0 14px rgba(212,160,23,0.14);
+}
+
+.floating-group select {
+  width: 100%;
+  padding: 18px 14px 10px 14px;
+  background: linear-gradient(180deg, #fff8e8, #f6e7c2);
+  border: 1px solid rgba(212,175,55,0.12);
+  border-radius: 12px;
+  color: #4a3512;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.floating-group select:focus {
+  appearance: none;
+}
+
+.floating-group select:focus + label,
+.floating-group select:not([value=""]) + label {
+  top: 14px;
+  font-size: 11px;
+  color: #f7e8bf;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .btn-glass-gold {

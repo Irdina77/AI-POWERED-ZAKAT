@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
@@ -7,6 +7,22 @@ import { getTranslationSection } from "../translations/translations";
 import "../Styles/Register.css";
 import zakatIcon from "../assets/zakat-icon.webp";
 
+const malaysiaStates = [
+  "Johor",
+  "Kedah",
+  "Kelantan",
+  "Melaka",
+  "Negeri Sembilan",
+  "Pahang",
+  "Penang",
+  "Perak",
+  "Perlis",
+  "Sabah",
+  "Sarawak",
+  "Selangor",
+  "Terengganu",
+];
+
 function Register({ onRegisterSuccess, onBackToLogin }) {
   const navigate = useNavigate();
   const { language } = useLanguage();
@@ -14,8 +30,25 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [selectedState, setSelectedState] = useState("Selangor");
+  const [businessType, setBusinessType] = useState(
+    localStorage.getItem("businessType") || "retail"
+  );
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const savedState =
+      localStorage.getItem("selectedState") ||
+      localStorage.getItem("selectedZakatState");
+
+    if (savedState) {
+      setSelectedState(savedState);
+    }
+
+    const savedBusinessType = localStorage.getItem("businessType");
+    if (savedBusinessType) setBusinessType(savedBusinessType);
+  }, []);
 
   const validateForm = () => {
     // Check if all fields are filled
@@ -81,6 +114,16 @@ localStorage.setItem(
 localStorage.setItem(
   "registeredEmail",
   cleanEmail
+);
+
+localStorage.setItem(
+  "selectedState",
+  selectedState
+);
+
+localStorage.setItem(
+  "businessType",
+  businessType
 );
 
 console.log(
@@ -180,6 +223,43 @@ console.log(
               required 
             />
             <label htmlFor="pass">{t.password}</label>
+          </div>
+
+          <div className="floating-group select-group">
+            <label style={{marginBottom:8}}>State</label>
+            <select
+              id="state"
+              name="state"
+              value={selectedState}
+              onChange={(e) => setSelectedState(e.target.value)}
+              disabled={isLoading}
+              required
+            >
+              {malaysiaStates.map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="floating-group select-group">
+            <label style={{marginBottom:8}}>Business Type</label>
+            <select
+              id="businessType"
+              name="businessType"
+              value={businessType}
+              onChange={(e) => setBusinessType(e.target.value)}
+              disabled={isLoading}
+              required
+            >
+              <option value="retail">Retail Store</option>
+              <option value="wholesale">Wholesale</option>
+              <option value="service">Service Business</option>
+              <option value="manufacturing">Manufacturing</option>
+              <option value="trading">Trading</option>
+              <option value="other">Others</option>
+            </select>
           </div>
 
           <button 

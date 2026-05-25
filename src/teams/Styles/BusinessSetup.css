@@ -1,10 +1,17 @@
 /* BUSINESS SETUP PAGE */
 
+:root{
+  --gold-light: #fff8ea;
+  --gold-mid: #f7e8bf;
+  --gold-dark: #d4a017;
+  --gold-deep: #8b6526;
+}
+
 .business-setup-page {
-  background: linear-gradient(180deg, #fdf6e3 0%, #f5e2b8 100%);
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-mid) 100%);
   min-height: 100vh;
   padding: 20px;
-  color: #3b2a0a;
+  color: var(--gold-deep);
 }
 
 /* NAVBAR */
@@ -117,20 +124,21 @@
 .form-group input,
 .form-group select {
   padding: 12px 16px;
-  border: 1px solid #eadfca;
+  border: 1px solid rgba(212,175,55,0.15);
   border-radius: 12px;
   font-size: 14px;
   font-family: inherit;
   transition: all 0.3s ease;
-  background: #fffbf5;
+  background: linear-gradient(180deg, rgba(255,250,236,0.9), rgba(249,239,210,0.9));
+  color: var(--gold-deep);
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #d4a017;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.1);
+  border-color: var(--gold-dark);
+  background: linear-gradient(180deg, rgba(255,250,236,1), rgba(249,239,210,1));
+  box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.12);
 }
 
 .form-group input.input-error,

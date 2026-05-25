@@ -220,7 +220,7 @@ export default function Dashboard({
     window.location.href = "/login";
   }}
 >
-  🚪 Log Out
+  Log Out
 </button>
 
                 </div>

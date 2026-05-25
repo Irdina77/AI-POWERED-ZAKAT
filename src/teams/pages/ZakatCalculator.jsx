@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { getTranslationSection } from "../translations/translations";
@@ -13,8 +13,17 @@ function ZakatCalculator({ onComplete }) {
   const { language } = useLanguage();
   const t = getTranslationSection(language, 'calculator');
   const [selectedYear, setSelectedYear] = useState("2026");
-  const [selectedState, setSelectedState] = useState("Selangor");
+  const [selectedState, setSelectedState] = useState(() => {
+    return (
+      localStorage.getItem("selectedState") ||
+      localStorage.getItem("selectedZakatState") ||
+      "Selangor"
+    );
+  });
   const [businessMethod, setBusinessMethod] = useState("UntungRugi");
+  const [displayName, setDisplayName] = useState(
+    localStorage.getItem("registeredFullName") || "User"
+  );
   const [businessRevenue, setBusinessRevenue] = useState("");
   const [businessExpenses, setBusinessExpenses] = useState("");
   const [currentAssets, setCurrentAssets] = useState("");
@@ -22,6 +31,10 @@ function ZakatCalculator({ onComplete }) {
   const [hasCalculated, setHasCalculated] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("selectedState", selectedState);
+  }, [selectedState]);
 
   const yearRates = {
     2024: {
@@ -294,15 +307,7 @@ function ZakatCalculator({ onComplete }) {
               </button>
 
               <button className="navbar-logo-button">
-                <img
-                  src={zakatIcon}
-                  alt="logo"
-                  className="navbar-logo"
-                />
-
-                <span className="navbar-brand-name">
-                  ZakatNow
-                </span>
+                <span className="navbar-brand-name">ZakatNow</span>
               </button>
 
             </div>
@@ -346,22 +351,13 @@ function ZakatCalculator({ onComplete }) {
 
             {/* RIGHT */}
             <div className="navbar-right">
-
               <button
-                className="language-switch"
+                className="sidebar-toggle"
+                onClick={() => setIsDrawerOpen(true)}
+                aria-label="Open menu"
               >
-                🌐 EN ▼
+                ≡
               </button>
-
-              <button
-                className="user-button"
-                onClick={() =>
-                  setIsDrawerOpen(true)
-                }
-              >
-                👤 User
-              </button>
-
             </div>
 
           </header>

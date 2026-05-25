@@ -96,7 +96,7 @@ export default function AdminDashboard() {
                     setShowMenu(false);
                   }}
                 >
-                  📊 Overview
+                  Overview
                 </button>
 
                 <button
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
                     setShowMenu(false);
                   }}
                 >
-                  📈 Nisab Rate
+                  Nisab Rate
                 </button>
 
                 <button
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
                     setShowMenu(false);
                   }}
                 >
-                  👥 Users
+                  Users
                 </button>
 
                 <button
@@ -132,7 +132,7 @@ export default function AdminDashboard() {
                     setShowMenu(false);
                   }}
                 >
-                  💳 Transactions
+                  Transactions
                 </button>
 
                 <hr className="admin-menu-divider" />
@@ -141,7 +141,7 @@ export default function AdminDashboard() {
                   className="admin-menu-item logout"
                   onClick={handleLogout}
                 >
-                  🚪 Log Out
+                  Log Out
                 </button>
               </div>
             )}

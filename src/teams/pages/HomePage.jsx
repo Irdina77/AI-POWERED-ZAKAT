@@ -65,7 +65,9 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const savedState = localStorage.getItem("selectedZakatState");
+    const savedState =
+      localStorage.getItem("selectedState") ||
+      localStorage.getItem("selectedZakatState");
 
     if (savedState) {
       setSelectedState(savedState);
@@ -73,7 +75,7 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("selectedZakatState", selectedState);
+    localStorage.setItem("selectedState", selectedState);
     localStorage.setItem("selectedNisabValue", selectedNisab.value);
   }, [selectedState, selectedNisab.value]);
 
@@ -143,7 +145,7 @@ export default function HomePage() {
                       setShowLogoMenu(false);
                     }}
                   >
-                    🏠 Home Page
+                    Home Page
                   </button>
 
                   <button
@@ -153,7 +155,7 @@ export default function HomePage() {
                       setShowLogoMenu(false);
                     }}
                   >
-                    🧮 Calculate Zakat
+                    Calculate Zakat
                   </button>
 
                   <button
@@ -163,7 +165,7 @@ export default function HomePage() {
                       setShowLogoMenu(false);
                     }}
                   >
-                    🏢 Business Setup
+                    Business Setup
                   </button>
 
                   <button
@@ -173,7 +175,7 @@ export default function HomePage() {
                       setShowLogoMenu(false);
                     }}
                   >
-                    📈 Nisab Rate
+                    Nisab Rate
                   </button>
 
                   <button
@@ -183,7 +185,7 @@ export default function HomePage() {
                       setShowLogoMenu(false);
                     }}
                   >
-                    👤 Profile
+                    Profile
                   </button>
 
                   <button
@@ -193,13 +195,13 @@ export default function HomePage() {
                       setShowLogoMenu(false);
                     }}
                   >
-                    💳 Pay Zakat
+                    Pay Zakat
                   </button>
 
                   <hr className="user-menu-divider" />
 
                   <button className="user-menu-item logout" onClick={handleLogout}>
-                    🚪 Log Out
+                    Log Out
                   </button>
                 </div>
               )}

@@ -53,11 +53,11 @@
 
 .zakat-card {
   width: 100%;
-  background: white;
+  background: linear-gradient(180deg, #fffdf6, #fbf3db);
   border-radius: 20px;
   padding: 32px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(234, 223, 202, 0.3);
+  box-shadow: 0 8px 32px rgba(139, 101, 38, 0.06);
+  border: 1px solid rgba(212,175,55,0.12);
   transition: all 0.3s ease;
 }
 
@@ -93,11 +93,11 @@
 .zakat-input,
 .zakat-select {
   width: 100%;
-  padding: 16px 18px;
+  padding: 14px 16px;
   border-radius: 12px;
-  border: 1px solid #e8dcc6;
+  border: 1px solid rgba(212,175,55,0.12);
   margin-bottom: 20px;
-  background: #faf9f6;
+  background: linear-gradient(180deg, #fff8e8, #f6e7c2);
   box-sizing: border-box;
   font-size: 15px;
   transition: all 0.3s ease;
@@ -108,8 +108,8 @@
 .zakat-select:focus {
   border-color: #d4a017;
   outline: none;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.1);
+  background: linear-gradient(180deg, #fffdf6, #fff6de);
+  box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.12);
 }
 
 .zakat-button {

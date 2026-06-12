@@ -234,7 +234,10 @@ export default function AdminDashboard() {
               >
                 ✏️ Update Nisab Rate
               </button>
-              <button className="admin-action-btn secondary">
+              <button
+                className="admin-action-btn secondary"
+                onClick={() => navigate("/admin/nisab-history")}
+              >
                 📊 View History
               </button>
             </div>
@@ -263,21 +266,42 @@ export default function AdminDashboard() {
                     <td>user@example.com</td>
                     <td><span className="status-badge active">Active</span></td>
                     <td>2026-05-15</td>
-                    <td><button className="table-action-btn">View</button></td>
+                    <td>
+                      <button
+                        className="table-action-btn"
+                        onClick={() => navigate("/admin/users/U001")}
+                      >
+                        View
+                      </button>
+                    </td>
                   </tr>
                   <tr>
                     <td>#U002</td>
                     <td>another@example.com</td>
                     <td><span className="status-badge active">Active</span></td>
                     <td>2026-05-10</td>
-                    <td><button className="table-action-btn">View</button></td>
+                    <td>
+                      <button
+                        className="table-action-btn"
+                        onClick={() => navigate("/admin/users/U002")}
+                      >
+                        View
+                      </button>
+                    </td>
                   </tr>
                   <tr>
                     <td>#U003</td>
                     <td>inactive@example.com</td>
                     <td><span className="status-badge inactive">Inactive</span></td>
                     <td>2026-04-20</td>
-                    <td><button className="table-action-btn">View</button></td>
+                    <td>
+                      <button
+                        className="table-action-btn"
+                        onClick={() => navigate("/admin/users/U003")}
+                      >
+                        View
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>

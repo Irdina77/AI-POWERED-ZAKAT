@@ -17,9 +17,10 @@ import BusinessSetup from "./pages/BusinessSetup";
 import ResultPage from "./pages/ResultPage";
 import PaymentPage from "./pages/PaymentPage";
 import TransferPage from "./pages/TransferPage";
-import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import UpdateNisabRate from "./pages/UpdateNisabRate";
+import UserDetail from "./pages/UserDetail";
+import NisabHistory from "./pages/NisabHistory";
 
 import "./App.css";
 import "./Styles/ZakatCalculator.css";
@@ -324,6 +325,28 @@ export default function App() {
           element={
             isLoggedIn && userRole === "admin" ? (
               <UpdateNisabRate />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/admin/nisab-history"
+          element={
+            isLoggedIn && userRole === "admin" ? (
+              <NisabHistory />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/admin/users/:userId"
+          element={
+            isLoggedIn && userRole === "admin" ? (
+              <UserDetail />
             ) : (
               <Navigate to="/login" replace />
             )
